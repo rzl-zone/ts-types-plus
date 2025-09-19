@@ -1,0 +1,85 @@
+{
+  "name": "@rzl-zone/ts-types-plus",
+  "version": "0.0.1",
+  "sideEffects": false,
+  "engineStrict": true,
+  "license": "MIT",
+  "types": "./dist/index.d.ts",
+  "author": "Rizalvin Dwiky <rizalvindwiky1998@gmail.com>",
+  "homepage": "https://github.com/rzl-zone/ts-types-plus#readme",
+  "description": "A lightweight, modern collection of TypeScript types and interfaces to enhance type safety and improve code maintainability.",
+  "contributors": [
+    "Rizalvin Dwiky <rizalvindwiky1998@gmail.com>"
+  ],
+  "bugs": {
+    "url": "https://github.com/rzl-zone/ts-types-plus/issues"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.31.0",
+    "@types/node": "^20.19.11",
+    "del-cli": "^6.0.0",
+    "eslint": "^9.31.0",
+    "terser": "^5.44.0",
+    "tsup": "^8.5.0",
+    "tsx": "^4.20.3",
+    "typescript": "^5.9.2",
+    "typescript-eslint": "^8.41.0"
+  },
+  "peerDependenciesMeta": {},
+  "engines": {
+    "node": ">=16"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "typesVersions": {
+    "*": {
+      ".": [
+        "./dist/index.d.ts"
+      ]
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE.md"
+  ],
+  "keywords": [
+    "typescript",
+    "utils",
+    "helpers",
+    "library",
+    "@rzl-zone/ts-types-plus",
+    "rzl",
+    "rzl-zone",
+    "ts-types-plus",
+    "utility",
+    "ts",
+    "types",
+    "rzl-ts-types-plus",
+    "helper"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rzl-zone/ts-types-plus.git"
+  },
+  "scripts": {
+    "clean": "del-cli \"dist/*\"",
+    "prepublish": "npm run clean",
+    "prepare": "npm run build",
+    "prepublishOnly": "",
+    "check-publish": "npm pack --dry-run",
+    "delete-dist:index": "del-cli \"dist/index.{js,js.map,cjs,cjs.map}\" \"dist/index.d.{ts,cts}\"",
+    "postbuild": "del-cli \"dist/**/*.d.cts\" && npm run delete-dist:index",
+    "build": "npm run clean && tsup && npm run minify-dist && npm run postbuild",
+    "build:types-dts": "dts-bundle-generator --config dts-config.cjs --silent --external-imports next",
+    "format": "prettier --check .",
+    "minify-dist": "tsx scripts/minify-dist.ts",
+    "release-patch": "npm version patch && git push && git push --tags && npm publish"
+  }
+}

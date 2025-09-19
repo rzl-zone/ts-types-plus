@@ -1,8 +1,8 @@
 # Changelog
 
-## 1.0.0 (2025-09-19)
+## 0.0.1 (2025-09-19)
 
 
-### Bug Fixes
+### First Release 
 
-* Fixing scripts at package.json ([a0872f8](https://github.com/rzl-zone/ts-types-plus/commit/a0872f8ab68731274888281e33829e698848951a))
+* First Release version ([0.0.1](https://github.com/rzl-zone/ts-types-plus/commit/40a82b7752ee54df284733227807f9a7f2dad131))

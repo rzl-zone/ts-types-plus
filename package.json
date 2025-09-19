@@ -36,6 +36,9 @@
       "import": {
         "types": "./dist/index.d.ts",
         "default": "./dist/index.ts"
+      },
+      "require": {
+        "types": "./dist/index.d.ts"
       }
     }
   },

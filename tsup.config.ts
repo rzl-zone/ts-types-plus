@@ -10,10 +10,10 @@ export default defineConfig([
   {
     entry: entries,
     outDir: "dist",
-    format: ["cjs", "esm"],
-    splitting: true,
-    bundle: true,
-    minify: "terser",
+    format: ["esm"],
+    splitting: false,
+    bundle: false,
+    minify: false,
     treeshake: true,
     external: [],
     dts: true,
@@ -26,31 +26,6 @@ export default defineConfig([
     esbuildOptions(options) {
       options.legalComments = "none";
       options.ignoreAnnotations = true;
-
-      options.plugins = [
-        {
-          name: "remove-types-runtime",
-          setup(build) {
-            build.onResolve({ filter: /\.(types|d)\.(ts|tsx)$/ }, (args) => {
-              return { path: args.path, external: true };
-            });
-
-            build.onResolve({ filter: /^types\// }, (args) => {
-              return { path: args.path, external: true };
-            });
-
-            build.onResolve({ filter: /src\/types\// }, (args) => {
-              return { path: args.path, external: true };
-            });
-          }
-        }
-      ];
-    },
-    onSuccess: async () => {
-      const removeJs = await fg(["dist/**/*.{js,js.map,cjs}", "dist/*.{js,js.map,cjs}"]);
-      for (const file of removeJs) {
-        fs.rmSync(file, { force: true });
-      }
     }
   }
 ]);

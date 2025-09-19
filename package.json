@@ -4,6 +4,8 @@
   "sideEffects": false,
   "engineStrict": true,
   "license": "MIT",
+  "type": "module",
+  "main": "./dist/index.ts",
   "types": "./dist/index.d.ts",
   "author": "Rizalvin Dwiky <rizalvindwiky1998@gmail.com>",
   "homepage": "https://github.com/rzl-zone/ts-types-plus#readme",
@@ -31,12 +33,15 @@
   },
   "exports": {
     ".": {
-      "types": "./dist/index.d.ts"
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.ts"
+      }
     }
   },
   "typesVersions": {
     "*": {
-      ".": [
+      "*": [
         "./dist/index.d.ts"
       ]
     }
@@ -73,12 +78,12 @@
     "prepublish": "npm run clean",
     "prepare": "npm run build",
     "check-publish": "npm pack --dry-run",
-    "delete-dist:index": "del-cli \"dist/index.{js,js.map,cjs,cjs.map}\" \"dist/index.d.{ts,cts}\"",
-    "postbuild": "del-cli \"dist/**/*.d.cts\" && npm run delete-dist:index",
+    "delete-dist:index": "del-cli \"dist/index.{js,mjs,js.map,cjs,cjs.map}\"",
+    "postbuild": "del-cli \"dist/**/*.d.{c|m}ts\" && npm run delete-dist:index",
     "build": "npm run clean && tsup && npm run minify-dist && npm run postbuild",
     "build:types-dts": "dts-bundle-generator --config dts-config.cjs --silent --external-imports next",
     "format": "prettier --check .",
-    "minify-dist": "tsx scripts/minify-dist.ts",
+    "minify-dist": "tsx scripts/minify-dist.ts && tsx scripts/copy-dist-type.ts",
     "release-patch": "npm version patch && git push && git push --tags && npm publish"
   }
 }

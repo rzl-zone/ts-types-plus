@@ -3,7 +3,7 @@
     "baseUrl": ".",
     "target": "esnext",
     "module": "esnext",
-    "moduleResolution": "bundler",
+    "moduleResolution": "node",
     "strict": true,
     "declaration": true,
     "strictNullChecks": true,

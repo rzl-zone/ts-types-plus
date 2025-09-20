@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.0.4](https://github.com/rzl-zone/ts-types-plus/compare/v0.0.3...v0.0.4) (2025-09-20)
+
+
+### Bug Fixes
+
+* Trying to fix export types support for bundling from external ([e10746f](https://github.com/rzl-zone/ts-types-plus/commit/e10746f494ecd2365e400c1baf461a2895952fa2))
+
 ## [0.0.3](https://github.com/rzl-zone/ts-types-plus/compare/v0.0.2...v0.0.3) (2025-09-19)
 
 

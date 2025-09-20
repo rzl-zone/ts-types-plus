@@ -3,7 +3,7 @@
 </div>
 
 <p align="center">
-🚀 <strong><u>Rzl TypeScript Types</u></strong> 🚀<br/>
+🚀 <strong><u>Rzl TS Types Plus</u></strong> 🚀<br/>
 <i>A lightweight, modern collection of TypeScript types and interfaces for Node.js & browser projects (via bundlers like Webpack/Vite).</i><br/>
 <i>Provides reusable types to enhance type safety and improve code maintainability.</i><br/>
 <strong><i>Built with ❤️ by <a href="https://github.com/rzl-app" target="_blank" rel="nofollow noreferrer noopener">@rzl-app</a>.</i></strong>
@@ -67,6 +67,13 @@
   - ✅ Node.js (16.0.0+)  
   - ✅ Modern browsers (via bundlers like Webpack / Vite)  
 
+- **Recommended tsconfig settings for full TypeScript support:**
+  - `"target": "es2022"`
+  - `"module": "es2022"`
+
+> ℹ️ Note: If you’re using TypeScript and compiling from source, make sure your `tsconfig.json` supports `"target": "es2022"` and `"module": "es2022"` for full compatibility. Lower targets may cause type issues (like `any`).
+
+
 
 ---
 
@@ -94,11 +101,11 @@
 
 <h2 id="features">✨ <strong>Features</strong></h2>
 
-- 🚀 Written in **TypeScript** — fully typed & type-safe  
+- 📝 Written in **TypeScript** — fully typed & type-safe  
 - ⚡ Lightweight & easy to include in projects  
 - 📦 Compatible with **Node.js** & modern browsers (via bundlers)  
 - ❤️ Designed for maintainable and readable code  
-- 🛠 Includes useful TypeScript types like `OmitStrict`, `PartialOnly`, etc.  
+- 🧩 Contains useful TypeScript types like `OmitStrict`, `PartialOnly`, etc.
 
 ---
 
@@ -112,23 +119,70 @@
   ```
   #### Place your cursor inside { } then press Ctrl+Space to see all available types with full TSDoc hints.
   ---
-  ### **Hint: Autocomplete**
+  ### **Hint: Autocomplete Setup (Step by Step)**
 
-  **To get the best autocomplete hints for folders and files, add the `types` field in your configuration file:**
+  #### Make TypeScript & VSCode automatically provide autocomplete for `@rzl-zone/ts-types-plus` without needing triple-slash references in every file:
 
-  #### # **_TypeScript_**:
-  Add this to your `tsconfig.json`:
-  ```jsonc
-  // tsconfig.json
-  {
-    "compilerOptions": {
-      "types": [
-        "@rzl-zone/ts-types-plus"
-      ]
-    }
-  }
+  - 1️⃣ **Install @rzl-zone/ts-types-plus.**
+
+    - Make sure the package is installed:
+
+      ```bash
+      npm install @rzl-zone/ts-types-plus
+      # or
+      yarn add @rzl-zone/ts-types-plus
+      # or
+      pnpm add @rzl-zone/ts-types-plus
+      ```
+
+  - 2️⃣ **Create a types folder.**
+
+    - Inside your project root, make a folder called `types`:
+
+      ```pgsql
+      project-root/
+        ├─ src/
+        ├─ types/
+        │  └─ index.d.ts
+        └─ tsconfig.json 
+      ```
+
+  - 3️⃣ **Add the global reference file.**
+
+    - Create `types/index.d.ts` with this content:
+
+      ```ts
+      /// <reference types="@rzl-zone/ts-types-plus" />
+      ``` 
+
+      - This tells TypeScript to include the types from `@rzl-zone/ts-types-plus` globally.
+      - You can add more references here if needed, for example:
+
+      ```ts
+      /// <reference types="node" />
+      /// <reference types="@rzl-zone/ts-types-plus" />
+      ``` 
+
+  - 4️⃣ **Update tsconfig.json.**
+
+    - Make sure not to override "types" (or leave it empty) so TypeScript automatically picks up your types folder:
+
+      ```jsonc
+      // tsconfig.json
+      {
+        "compilerOptions": { 
+          "typeRoots": ["./types", "./node_modules/@types"],
+          // other your config...
+        },
+        "include": ["src", "types"],
+        // other your config...
+      }
+      ```
+      - `typeRoots` tells TS where to look for global type definitions.
+      - The `types` folder comes first, so your references override or add to the default `@types` packages
+    
+  **Now, all types from @rzl-zone/ts-types-plus are globally available, and you don’t need "types": ["@rzl-zone/ts-types-plus"] in tsconfig.json.** 
  
-  ``` 
   <!-- - <h4 id="detailed-features--assertions">
       Assertions - 
       <a href="/docs/detailed-features/assertions.md#docs-sub-main--title">

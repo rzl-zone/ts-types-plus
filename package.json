@@ -6,6 +6,7 @@
   "license": "MIT",
   "type": "module",
   "main": "./dist/index.ts",
+  "types": "./dist/index.d.ts",
   "author": "Rizalvin Dwiky <rizalvindwiky1998@gmail.com>",
   "homepage": "https://github.com/rzl-zone/ts-types-plus#readme",
   "description": "A lightweight, modern collection of TypeScript types and interfaces to enhance type safety and improve code maintainability.",
@@ -33,9 +34,11 @@
   "exports": {
     ".": {
       "import": {
+        "types": "./dist/index.d.ts",
         "default": "./dist/index.ts"
       },
       "require": {
+        "types": "./dist/index.d.ts",
         "default": "./dist/index.ts"
       }
     },
@@ -44,7 +47,7 @@
   "typesVersions": {
     "*": {
       "*": [
-        "./dist/index.ts"
+        "./dist/index.d.ts"
       ]
     }
   },
@@ -82,7 +85,7 @@
     "check-publish": "npm pack --dry-run",
     "delete-dist:index": "del-cli \"dist/index.{js,mjs,js.map,cjs,cjs.map}\"",
     "delete-dist:index-dts": "del-cli \"dist/index.d.{ts,mts,ts.map,cts,cts.map}\"",
-    "postbuild": "del-cli \"dist/**/*.d.{c|m}ts\" && npm run delete-dist:index && npm run delete-dist:index-dts",
+    "postbuild": "del-cli \"dist/**/*.d.{c|m}ts\" && npm run delete-dist:index",
     "build": "npm run clean && tsup && npm run minify-dist && npm run postbuild",
     "build:types-dts": "dts-bundle-generator --config dts-config.cjs --silent --external-imports next",
     "format": "prettier --check .",

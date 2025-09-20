@@ -81,11 +81,13 @@
     "prepare": "npm run build",
     "check-publish": "npm pack --dry-run",
     "delete-dist:index": "del-cli \"dist/index.{js,mjs,js.map,cjs,cjs.map}\"",
-    "postbuild": "del-cli \"dist/**/*.d.{c|m}ts\" && npm run delete-dist:index",
+    "delete-dist:index-dts": "del-cli \"dist/index.d.{ts,mts,ts.map,cts,cts.map}\"",
+    "postbuild": "del-cli \"dist/**/*.d.{c|m}ts\" && npm run delete-dist:index && npm run delete-dist:index-dts",
     "build": "npm run clean && tsup && npm run minify-dist && npm run postbuild",
     "build:types-dts": "dts-bundle-generator --config dts-config.cjs --silent --external-imports next",
     "format": "prettier --check .",
-    "minify-dist": "tsx scripts/minify-dist.ts && tsx scripts/copy-dist-type.ts",
+    "minify-dist": "tsx scripts/minify-dist.ts && npm run copy-dist-type ",
+    "copy-dist-type": "tsx scripts/copy-dist-type.ts",
     "release-patch": "npm version patch && git push && git push --tags && npm publish"
   }
 }

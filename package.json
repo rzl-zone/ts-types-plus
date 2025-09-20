@@ -6,7 +6,6 @@
   "license": "MIT",
   "type": "module",
   "main": "./dist/index.ts",
-  "types": "./dist/index.ts",
   "author": "Rizalvin Dwiky <rizalvindwiky1998@gmail.com>",
   "homepage": "https://github.com/rzl-zone/ts-types-plus#readme",
   "description": "A lightweight, modern collection of TypeScript types and interfaces to enhance type safety and improve code maintainability.",
@@ -34,11 +33,10 @@
   "exports": {
     ".": {
       "import": {
-        "types": "./dist/index.ts",
         "default": "./dist/index.ts"
       },
       "require": {
-        "types": "./dist/index.ts"
+        "default": "./dist/index.ts"
       }
     },
     "./package.json": "./package.json"

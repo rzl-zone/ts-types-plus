@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.0.8](https://github.com/rzl-zone/ts-types-plus/compare/v0.0.7...v0.0.8) (2025-09-20)
+
+
+### Bug Fixes
+
+* Fixing README.md and fix scripts at package.json, fix scripts for build. ([410a35a](https://github.com/rzl-zone/ts-types-plus/commit/410a35a1e6a6a8982f63bb2f92bc8c8d165e0e82))
+
 ## [0.0.7](https://github.com/rzl-zone/ts-types-plus/compare/v0.0.6...v0.0.7) (2025-09-20)
 
 

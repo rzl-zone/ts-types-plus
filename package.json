@@ -31,16 +31,15 @@
     "node": ">=16"
   },
   "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.ts",
-      "require": "./dist/index.ts"
-    },
     "./runtime": {
       "import": "./dist/index.ts",
       "require": "./dist/index.ts"
     },
-    "./package.json": "./package.json"
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.ts",
+      "require": "./dist/index.ts"
+    }
   },
   "files": [
     "dist",

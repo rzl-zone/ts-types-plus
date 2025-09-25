@@ -1,4 +1,3 @@
-import fs from "fs";
 import fg from "fast-glob";
 import { defineConfig } from "tsup";
 

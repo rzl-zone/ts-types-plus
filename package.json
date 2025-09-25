@@ -19,11 +19,13 @@
   "devDependencies": {
     "@eslint/js": "^9.31.0",
     "@types/node": "^20.19.11",
+    "chalk": "^5.6.2",
     "del-cli": "^6.0.0",
     "eslint": "^9.31.0",
     "terser": "^5.44.0",
     "tsup": "^8.5.0",
     "tsx": "^4.20.3",
+    "type-fest": "^5.0.1",
     "typescript": "^5.9.2",
     "typescript-eslint": "^8.41.0"
   },
@@ -74,9 +76,10 @@
     "delete-dist:index": "del-cli \"dist/index.{js,mjs,js.map,cjs,cjs.map}\"",
     "delete-dist:index-dts": "del-cli \"dist/index.d.{ts,mts,ts.map,cts,cts.map}\"",
     "postbuild": "del-cli \"dist/**/*.d.{c,m}ts\" && npm run delete-dist:index",
-    "build": "npm run clean:dist && tsup && npm run minify:dist && npm run postbuild",
+    "build": "npm run clean:dist && tsup && npm run inject:banner && npm run minify:dts-dist && npm run postbuild",
     "build:types-dts": "dts-bundle-generator --config dts-config.cjs --silent --external-imports next",
-    "minify:dist": "tsx scripts/minifyDist && npm run copy:dist-type ",
+    "inject:banner": "tsx scripts/injectBanner",
+    "minify:dts-dist": "tsx scripts/minifyDtsDist && npm run copy:dist-type ",
     "copy:dist-type": "tsx scripts/copyDistType.ts",
     "check-publish": "npm run build && npm pack --dry-run",
     "release-patch": "npm version patch && git push && git push --tags && npm publish"

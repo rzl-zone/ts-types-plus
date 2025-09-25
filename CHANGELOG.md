@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.0.13](https://github.com/rzl-zone/ts-types-plus/compare/v0.0.12...v0.0.13) (2025-09-25)
+
+
+### Bug Fixes
+
+* **build:** Features making more readable logging build script with chalk. ([5b0b779](https://github.com/rzl-zone/ts-types-plus/commit/5b0b77924d4a34d59a4bc77d73845ffb9d21395a))
+
 ## [0.0.12](https://github.com/rzl-zone/ts-types-plus/compare/v0.0.11...v0.0.12) (2025-09-25)
 
 

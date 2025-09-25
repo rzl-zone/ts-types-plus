@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.0.12](https://github.com/rzl-zone/ts-types-plus/compare/v0.0.11...v0.0.12) (2025-09-25)
+
+
+### Bug Fixes
+
+* **chore:** Fixing exports at package.json. ([cf99379](https://github.com/rzl-zone/ts-types-plus/commit/cf9937970f5828727d83a5cd981bea25791f5bf8))
+
 ## [0.0.11](https://github.com/rzl-zone/ts-types-plus/compare/v0.0.10...v0.0.11) (2025-09-25)
 
 

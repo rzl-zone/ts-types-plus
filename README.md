@@ -71,7 +71,7 @@
   - `"target": "es2022"`
   - `"module": "es2022"`
 
-> ℹ️ Note: If you’re using TypeScript and compiling from source, make sure your `tsconfig.json` supports `"target": "es2022"` and `"module": "es2022"` for full compatibility. Lower targets may cause type issues (like `any`).
+> ℹ️ Note: If you’re using TypeScript and compiling from source, make sure your `tsconfig.json` minimum supports `"target": "es2022"` and `"module": "es2022"` or higher for full compatibility. Lower targets may cause type issues (like `any`).
 
 
 

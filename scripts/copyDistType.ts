@@ -4,7 +4,7 @@ import fg from "fast-glob";
 
 const distFolder = path.resolve("dist");
 
-const files = await fg("**/*.d.ts", { cwd: distFolder, absolute: true });
+const files = await fg("**/*.d.{ts,mts,cts,esm}", { cwd: distFolder, absolute: true });
 
 for (const file of files) {
   const parsed = path.parse(file);

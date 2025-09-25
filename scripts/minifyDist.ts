@@ -1,12 +1,7 @@
 import { globSync } from "glob";
 import { readFileSync, writeFileSync } from "fs";
 
-const files = globSync([
-  "dist/**/*.d.ts",
-  "dist/**/*.d.mts",
-  "dist/**/*.d.cts",
-  "dist/**/*.d.esm"
-]);
+const files = globSync(["dist/**/*.d.{ts,mts,cts,esm}"]);
 
 console.log(`Minify Starting`);
 

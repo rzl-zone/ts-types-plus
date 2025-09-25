@@ -16,7 +16,9 @@ export default defineConfig([
     minify: false,
     treeshake: true,
     external: [],
-    dts: true,
+    dts: {
+      only: true
+    },
     clean: false,
     terserOptions: {
       format: {

@@ -44,13 +44,6 @@
     },
     "./package.json": "./package.json"
   },
-  "typesVersions": {
-    "*": {
-      ".": [
-        "./dist/index.d.ts"
-      ]
-    }
-  },
   "files": [
     "dist",
     "README.md",

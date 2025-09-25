@@ -67,7 +67,7 @@
   - ✅ Node.js (16.0.0+)  
   - ✅ Modern browsers (via bundlers like Webpack / Vite)  
 
-- **Recommended tsconfig settings for full TypeScript support:**
+- **Recommended minimum tsconfig settings for full TypeScript support:**
   - `"target": "es2022"`
   - `"module": "es2022"`
 

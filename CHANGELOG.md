@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.0.9](https://github.com/rzl-zone/ts-types-plus/compare/v0.0.8...v0.0.9) (2025-09-25)
+
+
+### Bug Fixes
+
+* Fixing exports types at package.json, fixing tsup for build dts only, and fix build scripts. ([1ab395d](https://github.com/rzl-zone/ts-types-plus/commit/1ab395d91e7747a429aa5a84abbadff5af0b6944))
+
 ## [0.0.8](https://github.com/rzl-zone/ts-types-plus/compare/v0.0.7...v0.0.8) (2025-09-20)
 
 

@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.0.11](https://github.com/rzl-zone/ts-types-plus/compare/v0.0.10...v0.0.11) (2025-09-25)
+
+
+### Bug Fixes
+
+* Add exports runtime path at package.json. ([4133ea3](https://github.com/rzl-zone/ts-types-plus/commit/4133ea3ccfef2ca3bda96820855f9337050b80b7))
+
 ## [0.0.10](https://github.com/rzl-zone/ts-types-plus/compare/v0.0.9...v0.0.10) (2025-09-25)
 
 

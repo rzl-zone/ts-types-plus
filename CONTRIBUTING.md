@@ -58,7 +58,7 @@ We welcome all contributions, including:
     ```bash
     git push origin feature/my-awesome-feature
     ```
-10. **Create a Pull Request **
+10. **Create a Pull Request**
     ###### Go to your repo on GitHub, and click Compare & pull request.
 
 ---

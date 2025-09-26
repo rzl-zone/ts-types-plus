@@ -1,12 +1,11 @@
 import fs from "fs";
 import path from "path";
-import chalk from "chalk";
 import fg from "fast-glob";
+
+import { BUILD_LOGGER } from "./utils/logger";
 
 export const copyDistType = async (pattern: string | string[]) => {
   try {
-    // const distDir = path.resolve("dist");
-
     const patterns = Array.isArray(pattern) ? pattern : [pattern];
     const files: string[] = [];
 
@@ -15,13 +14,9 @@ export const copyDistType = async (pattern: string | string[]) => {
       files.push(...matched);
     }
 
-    console.log(
-      chalk.bold(
-        `🕧 ${chalk.cyanBright("Starting")} to ${chalk.underline.blueBright(
-          "Copying DTS Files to TS Files"
-        )} at ${chalk.italic.underline.whiteBright("'dist'")} folder.`
-      )
-    );
+    BUILD_LOGGER.ON_STARTING({
+      actionName: "Copying DTS Files to TS Files"
+    });
 
     for (const [idx, f] of files.entries()) {
       const src = path.relative(process.cwd(), f);
@@ -35,48 +30,30 @@ export const copyDistType = async (pattern: string | string[]) => {
 
       fs.copyFileSync(src, dest);
 
-      console.log(
-        `${chalk.bold("   >")} ${chalk.italic(
-          `${chalk.white(idx + 1 + ".")} ${chalk.white("Copying DTS")} ${chalk.yellow(
-            "from"
-          )} '${chalk.bold.underline.cyanBright(relSrc)}' ${chalk.bold.gray(
-            "➔"
-          )} '${chalk.bold.underline.cyanBright(relDest)}'.`
-        )}`
-      );
+      BUILD_LOGGER.ON_PROCESS_COPY({
+        actionName: "Copying DTS",
+        count: idx + 1,
+        copyFrom: relSrc,
+        copyTo: relDest
+      });
     }
 
     if (files.length > 0) {
-      console.log(
-        chalk.bold(
-          `✅ ${chalk.greenBright("Success")} ${chalk.underline.blueBright(
-            "Copying DTS"
-          )} (${chalk.yellowBright(
-            `${files.length} file${files.length > 1 ? "(s)" : ""}`
-          )}) at ${chalk.italic.underline.whiteBright("'dist'")} folder.`
-        )
-      );
+      BUILD_LOGGER.ON_FINISH({
+        actionName: "Copying DTS",
+        count: files.length
+      });
     } else {
-      console.log(
-        chalk.bold(
-          `⚠️  ${chalk.yellowBright("Skipping")} ${chalk.underline.blueBright(
-            "Copying DTS"
-          )} ${chalk.white("because")} ${chalk.redBright(
-            "nothing left"
-          )} files at ${chalk.italic.underline.whiteBright(
-            "'dist'"
-          )} folder to ${chalk.dim.redBright("copy")}.`
-        )
-      );
+      BUILD_LOGGER.ON_SKIPPING({
+        actionName: "Copying DTS",
+        reasonEndText: "copy"
+      });
     }
-  } catch (e) {
-    console.error(
-      chalk.bold(
-        `✅ ${chalk.redBright("Error")} to ${chalk.underline.blueBright(
-          "Copying DTS"
-        )} at ${chalk.cyan("dist")} folder, because: \n\n > ${chalk.inverse.red(e)}`
-      )
-    );
+  } catch (error) {
+    BUILD_LOGGER.ON_ERROR({
+      actionName: "Copying DTS",
+      error
+    });
   }
 };
 

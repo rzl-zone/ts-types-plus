@@ -4,9 +4,8 @@ import { defineConfig } from "eslint/config";
 
 export default defineConfig([
   {
-    files: ["src/**/*.{ts,tsx}", "*.js"],
+    files: ["src/**/*.{ts,tsx}", "scripts/**/*.{ts,tsx}", "*.js", "internal-global.d.ts"],
     extends: [eslintJs.configs.recommended, tseslint.configs.recommended],
-    plugins: {},
     languageOptions: {
       parser: tseslint.parser,
       parserOptions: {

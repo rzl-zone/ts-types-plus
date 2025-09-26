@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.0.14](https://github.com/rzl-zone/ts-types-plus/compare/v0.0.13...v0.0.14) (2025-09-26)
+
+
+### Bug Fixes
+
+* **build:** Fixing build scripts and fixing prettier, eslint, and fixing version eslint to devDeps. ([7bd3397](https://github.com/rzl-zone/ts-types-plus/commit/7bd3397173ee86560c3ac240134c3431bbe89178))
+* **docs:** Fixing readme.md ([3172818](https://github.com/rzl-zone/ts-types-plus/commit/317281812f1c1eefbef9e2b8cc0222e51efb5a87))
+* **docs:** Fixing readme.md (2). ([005368c](https://github.com/rzl-zone/ts-types-plus/commit/005368c7d2d9b94fe49282a50aef6a19adbea042))
+
 ## [0.0.13](https://github.com/rzl-zone/ts-types-plus/compare/v0.0.12...v0.0.13) (2025-09-25)
 
 

@@ -1,27 +1,34 @@
 # Changelog
 
+## [0.0.15](https://github.com/rzl-zone/ts-types-plus/compare/v0.0.14...v0.0.15) (2025-10-17)
+
+
+### Bug Fixes
+
+* Fixing `README.md`. ([65cb2e0](https://github.com/rzl-zone/ts-types-plus/commit/65cb2e0394562d760044a3f465e901765b232388))
+* Fixing tsDoc of `CustomPromiseType`. ([4930c94](https://github.com/rzl-zone/ts-types-plus/commit/4930c9480d549e47916082a80bf5dd129b436b08))
+
 ## [0.0.14](https://github.com/rzl-zone/ts-types-plus/compare/v0.0.13...v0.0.14) (2025-09-26)
 
 
 ### Bug Fixes
 
-* **build:** Fixing build scripts and fixing prettier, eslint, and fixing version eslint to devDeps. ([7bd3397](https://github.com/rzl-zone/ts-types-plus/commit/7bd3397173ee86560c3ac240134c3431bbe89178))
-* **docs:** Fixing readme.md ([3172818](https://github.com/rzl-zone/ts-types-plus/commit/317281812f1c1eefbef9e2b8cc0222e51efb5a87))
-* **docs:** Fixing readme.md (2). ([005368c](https://github.com/rzl-zone/ts-types-plus/commit/005368c7d2d9b94fe49282a50aef6a19adbea042))
+* **Build:** Fixing build scripts and fixing prettier, eslint, and fixing version eslint to devDeps. ([7bd3397](https://github.com/rzl-zone/ts-types-plus/commit/7bd3397173ee86560c3ac240134c3431bbe89178))
+* **Docs:** Fixing readme.md (2). ([005368c](https://github.com/rzl-zone/ts-types-plus/commit/005368c7d2d9b94fe49282a50aef6a19adbea042))
 
 ## [0.0.13](https://github.com/rzl-zone/ts-types-plus/compare/v0.0.12...v0.0.13) (2025-09-25)
 
 
 ### Bug Fixes
 
-* **build:** Features making more readable logging build script with chalk. ([5b0b779](https://github.com/rzl-zone/ts-types-plus/commit/5b0b77924d4a34d59a4bc77d73845ffb9d21395a))
+* **Build:** Features making more readable logging build script with chalk. ([5b0b779](https://github.com/rzl-zone/ts-types-plus/commit/5b0b77924d4a34d59a4bc77d73845ffb9d21395a))
 
 ## [0.0.12](https://github.com/rzl-zone/ts-types-plus/compare/v0.0.11...v0.0.12) (2025-09-25)
 
 
 ### Bug Fixes
 
-* **chore:** Fixing exports at package.json. ([cf99379](https://github.com/rzl-zone/ts-types-plus/commit/cf9937970f5828727d83a5cd981bea25791f5bf8))
+* **Chore:** Fixing exports at package.json. ([cf99379](https://github.com/rzl-zone/ts-types-plus/commit/cf9937970f5828727d83a5cd981bea25791f5bf8))
 
 ## [0.0.11](https://github.com/rzl-zone/ts-types-plus/compare/v0.0.10...v0.0.11) (2025-09-25)
 
@@ -56,7 +63,7 @@
 
 ### Bug Fixes
 
-* Trying to fix export  with put back the .d.ts for bundling from external (4) ([fe6fa41](https://github.com/rzl-zone/ts-types-plus/commit/fe6fa414d07fa7466bd473d8951b1927adc3cf1b))
+* Trying to fix export with put back the .d.ts for bundling from external (4) ([fe6fa41](https://github.com/rzl-zone/ts-types-plus/commit/fe6fa414d07fa7466bd473d8951b1927adc3cf1b))
 
 ## [0.0.6](https://github.com/rzl-zone/ts-types-plus/compare/v0.0.5...v0.0.6) (2025-09-20)
 

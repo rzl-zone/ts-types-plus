@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.0.15](https://github.com/rzl-zone/ts-types-plus/compare/v0.0.14...v0.0.15) (2025-10-17)
+
+
+### Bug Fixes
+
+* Fixing `README.md`. ([65cb2e0](https://github.com/rzl-zone/ts-types-plus/commit/65cb2e0394562d760044a3f465e901765b232388))
+* Fixing tsDoc of `CustomPromiseType`. ([4930c94](https://github.com/rzl-zone/ts-types-plus/commit/4930c9480d549e47916082a80bf5dd129b436b08))
+
 ## [0.0.14](https://github.com/rzl-zone/ts-types-plus/compare/v0.0.13...v0.0.14) (2025-09-26)
 
 

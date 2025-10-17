@@ -72,8 +72,8 @@ interface CustomPromiseLike<OnSuccess, OnError> {
  * @template OnError   - The type of the rejection reason, defaults to `unknown`.
  * @example
  * ```ts
- * import type { CustomPromiseType } from "@rzl-zone/types";
- * import { CustomsPromise } from "@rzl-zone/promises";
+ * import type { CustomPromiseType } from "@rzl-zone/ts-types-plus";
+ * import { CustomPromise } from "@rzl-zone/utils-js/promises";
  *
  * const fetchUser = (): CustomPromiseType<User, ApiError> =>
  *   CustomsPromise<User, ApiError>((resolve, reject) => {

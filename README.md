@@ -82,19 +82,19 @@
 #### *With NPM*
 
 ```bash
-  npm install @rzl-zone/ts-types-plus
+npm install @rzl-zone/ts-types-plus
 ```
 
 #### *With Yarn*
 
 ```bash
-  yarn add @rzl-zone/ts-types-plus
+yarn add @rzl-zone/ts-types-plus
 ```
 
 #### *With PNPM*
 
 ```bash
-  pnpm add @rzl-zone/ts-types-plus
+pnpm add @rzl-zone/ts-types-plus
 ```
 
 ---
@@ -111,7 +111,7 @@
 
 <h2 id="detailed-features">💎 <strong>Detailed Features</strong></h2>
 
-  ### **Full documentation <a href="https://docs-rzl-ts-types-plus.vercel.app" target="_blank" rel="nofollow noreferrer noopener">Rzl Typed Helpers</a> is **currently under construction** 🏗️.**
+  ### **Full documentation <a href="https://rzlzone.pages.dev/docs/ts-types-plus" target="_blank" rel="nofollow noreferrer noopener">Rzl Typed Helpers</a> is **currently under construction** 🏗️.**
   #### For now, explore the examples or dive into the source — all utilities are documented via **TSDoc** and typed properly.
   
   ```ts 

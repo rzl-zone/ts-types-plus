@@ -1,6 +1,6 @@
 {
   "name": "@rzl-zone/ts-types-plus",
-  "version": "0.0.15",
+  "version": "0.1.0",
   "sideEffects": false,
   "engineStrict": true,
   "license": "MIT",

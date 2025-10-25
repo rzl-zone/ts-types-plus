@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.0](https://github.com/rzl-zone/ts-types-plus/compare/v0.0.15...v0.1.0) (2025-10-25)
+
+
+### Features
+
+* **Config:** **Update** _requirement_ minimum engines (`Node.js` to &gt;=18.18.0), peerDependencies (`TypeScript`  &gt;=5.9.0, `@types/node` &gt;=18.18.0), _update_ (`README.md`, `CHANGELOG.md`). ([e81cc43](https://github.com/rzl-zone/ts-types-plus/commit/e81cc433bd33a3c7c95e504271765a68b0cd953d))
+
 ## [0.0.15](https://github.com/rzl-zone/ts-types-plus/compare/v0.0.14...v0.0.15) (2025-10-17)
 
 

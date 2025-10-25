@@ -30,7 +30,11 @@
     "typescript-eslint": "^8.44.0"
   },
   "engines": {
-    "node": ">=16"
+    "node": ">=18.18.0"
+  },
+  "peerDependencies": {
+    "typescript": ">=5.9.0",
+    "@types/node": ">=18.18.0"
   },
   "exports": {
     "./runtime": {
@@ -53,13 +57,24 @@
     "utils",
     "helpers",
     "library",
+    "packages",
+    "package",
     "@rzl-zone/ts-types-plus",
     "rzl",
     "rzl-zone",
+    "rzl zone",
     "ts-types-plus",
+    "ts types plus",
+    "ts-types",
+    "ts types",
+    "type-plus",
+    "type plus",
     "utility",
     "ts",
     "types",
+    "types-plus",
+    "types plus",
+    "interfaces",
     "rzl-ts-types-plus",
     "helper"
   ],

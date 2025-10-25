@@ -54,7 +54,7 @@
 - ⚙️ [Installation](#installation)
 - ✨ [Features](#features)
 - 💎 [Detailed Features](#detailed-features)
-  - [Full documentation](#detailed-features--full-documentation)
+  - [Full Documentation](#detailed-features--full-documentation)
   - [Hint Autocomplete](#detailed-features--hint-autocomplete-setup)
 - 🔥 [Usage](#usage)
 - ❤️ [Sponsor](#sponsor-this-package)

@@ -4,12 +4,14 @@
   </a>
 </div>
 
-<h1 align="center"><strong>TS Types Plus (Rzl Zone)</strong></h1>
+<h1 align="center"><strong>TS Types Plus</strong></h1>
 
 <p align="center"> 
-  <i>A lightweight, modern collection of TypeScript types and interfaces for Node.js & browser projects (via bundlers like Webpack/Vite).</i><br/>
+  <i>
+    A lightweight, modern collection of TypeScript types and interfaces for Node.js & browser projects (via bundlers like <a href="https://webpack.js.org"><code>Webpack</code></a>, <a href="https://vercel.com/blog/turbopack"><code>Turbopack</code></a>, or <a href="https://vite.dev/"><code>Vite</code></a>).
+  </i><br/>
   <i>Provides reusable types to enhance type safety and improve code maintainability.</i><br/>
-  <strong><i>Built with ❤️ by <a href="https://github.com/rzl-app" target="_blank" rel="nofollow noreferrer noopener">@rzl-app</a>.</i></strong>
+  <strong><i>Built with ❤️ by <a href="https://github.com/rzl-zone" target="_blank" rel="nofollow noreferrer noopener">@rzl-zone</a>.</i></strong>
 </p>
 
 <div align="center">
@@ -71,17 +73,19 @@
 - **Node.js `≥18.18.0`**  
   This package uses modern TypeScript features, so Node.js 18.18.0 or higher is required.
 
-- **Supported environments:**
+- **Minimum supported environments ***(recommended)***:**
   - ✅ Node.js (18.18.0+).  
   - ✅ TypeScript (5.9.0+).  
-  - ✅ Modern browsers (via bundlers like Webpack / Vite).  
+  - ✅ Modern browsers (via bundlers like [`Webpack`](https://webpack.js.org), [`Turbopack`](https://vercel.com/blog/turbopack), or [`Vite`](https://vite.dev)).  
 
-- **Recommended minimum tsconfig settings for full TypeScript support:**
+- **Recommended minimum `tsconfig` settings for full TypeScript support:**
   - `"strict": true`
   - `"target": "es2022"`
   - `"module": "es2022"`
 
-> ℹ️ Note: If you’re using TypeScript and compiling from source, make sure your `tsconfig.json` minimum supports `"target": "es2022"` and `"module": "es2022"` or higher also set `"strict": true` for full compatibility. Lower targets or strict is false, may cause type issues (like `any`).
+  > ⚠️ **Note:**  
+  > - If you’re using TypeScript and compiling from source, make sure your `tsconfig.json` minimum supports `"target": "es2022"` and `"module": "es2022"` or higher also set `"strict": true` for full compatibility. 
+  > - Lower targets or strict is false, may cause type issues (like `any`).
 
 
 
@@ -123,7 +127,7 @@ pnpm add @rzl-zone/ts-types-plus@latest
 
   <h3 id="detailed-features--full-documentation">
     <strong>
-      Full documentation <a href="https://rzlzone.vercel.app/docs/ts-types-plus" target="_blank" rel="nofollow noreferrer noopener">Ts Types Plus</a> is 
+      Full documentation <a href="https://rzlzone.vercel.app/docs/ts-types-plus" target="_blank" rel="nofollow noreferrer noopener">TS Types Plus</a> is 
         <strong>currently under construction 🏗️</strong>.
     </strong>
   </h3>
@@ -195,10 +199,16 @@ pnpm add @rzl-zone/ts-types-plus@latest
       {
         "compilerOptions": { 
           "strict": true,
-          "typeRoots": ["./types", "./node_modules/@types"],
+          "typeRoots": [
+            "./types", 
+            "./node_modules/@types"
+          ],
           // other your config...
         },
-        "include": ["src", "types"],
+        "include": [
+          "src", 
+          "types"
+        ],
         // other your config...
       }
       ```
@@ -266,7 +276,8 @@ type MyType = OmitStrict<OtherType, "omittingProps">;
 
 ---
 
-✅ **Enjoy using `@rzl-zone/ts-types-plus`?**  
-*Star this repo [⭐](https://github.com/rzl-zone/ts-types-plus) and share it with other TypeScript developers!*
+<h2>✅ <strong>Enjoy using <code>@rzl-zone/ts-types-plus</code>?</strong></h2>
+
+**Star this repo [⭐](https://github.com/rzl-zone/ts-types-plus) and share it with other TypeScript developers!**
 
 ---

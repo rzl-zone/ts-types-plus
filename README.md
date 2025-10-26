@@ -82,6 +82,8 @@
   - `"strict": true`
   - `"target": "es2022"`
   - `"module": "es2022"`
+  
+  <br />
 
   > ⚠️ **Note:**  
   > - If you’re using TypeScript and compiling from source, make sure your `tsconfig.json` minimum supports `"target": "es2022"` and `"module": "es2022"` or higher also set `"strict": true` for full compatibility. 

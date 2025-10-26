@@ -6,7 +6,7 @@ This guide will help you set things up so you can start building, improving, and
 
 ---
 
-## How You Can Contribute?
+## How you can contribute?
 
 We welcome all types of contributions, including:
 

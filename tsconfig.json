@@ -1,15 +1,20 @@
 {
   "compilerOptions": {
+    "types": [
+      "node"
+    ],
+    "ignoreDeprecations": "6.0",
     "baseUrl": ".",
     "target": "es2022",
     "module": "es2022",
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "strict": true,
     "declaration": true,
     "strictNullChecks": true,
     "esModuleInterop": true,
     "stripInternal": true,
     "outDir": "dist",
+    "rootDir": "./src",
     "forceConsistentCasingInFileNames": true,
     "paths": {
       "@/*": [
@@ -20,7 +25,7 @@
       ],
       "@root-app/*": [
         "./*"
-      ],
+      ]
     },
     "skipLibCheck": true
   },

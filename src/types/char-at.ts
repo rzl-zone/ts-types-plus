@@ -54,4 +54,7 @@ type _CharAt<
  * type K = CharAt<"abc", -1>; // ➔ undefined
  * ```
  */
-export type CharAt<I extends string, N extends number | `${number}`> = _CharAt<I, N>;
+export type CharAt<I extends string, N extends number | `${number}`> = _CharAt<
+  I,
+  N
+>;

@@ -32,15 +32,16 @@ export type Dot<
   T extends string,
   U extends string,
   Trims extends boolean = true
-> = Extends<Trims, true> extends true
-  ? "" extends Trim<U>
-    ? Trim<T>
-    : "" extends Trim<T>
-    ? `${Trim<U>}`
-    : `${Trim<T>}.${Trim<U>}`
-  : "" extends U
-  ? T
-  : `${T}.${U}`;
+> =
+  Extends<Trims, true> extends true
+    ? "" extends Trim<U>
+      ? Trim<T>
+      : "" extends Trim<T>
+        ? `${Trim<U>}`
+        : `${Trim<T>}.${Trim<U>}`
+    : "" extends U
+      ? T
+      : `${T}.${U}`;
 
 /** -------------------------------------------------------
  * * ***Utility Type: `DotArray`.***
@@ -66,10 +67,10 @@ export type Dot<
  * // ➔ ""
  * ```
  */
-export type DotArray<Arr extends string[], Trims extends boolean = true> = Arr extends [
-  infer Head extends string,
-  ...infer Tail extends string[]
-]
+export type DotArray<
+  Arr extends string[],
+  Trims extends boolean = true
+> = Arr extends [infer Head extends string, ...infer Tail extends string[]]
   ? Head extends ""
     ? DotArray<Tail, Trims>
     : `${Trims extends true ? Trim<Head> : Head}${Tail extends []

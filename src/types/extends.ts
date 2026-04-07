@@ -35,7 +35,7 @@ export type NotExtends<T, Base> = Not<Extends<T, Base>>;
  * * ***Utility Type: `IfExtends`.***
  * -------------------------------------------------------
  * - **Conditional:**
- *    - Returns the third argument if the first argument ***extends*** the secon
+ *    - Returns the third argument if the first argument ***extends*** the second
  *      argument, otherwise returns the fourth argument.
  * - Defaults: `IfTrue = true`, `IfFalse = false`.
  * @template T - The type to check.
@@ -95,15 +95,14 @@ export type IfNotExtends<T, Base, IfTrue = true, IfFalse = false> = If<
  * // ➔ false
  * ```
  */
-export type ExtendsArr<T extends readonly unknown[], Base> = IsEmptyArray<T> extends true
-  ? true
-  : Pop<
-      T,
-      {
-        includeRemoved: true;
-      }
-    > extends readonly [infer Rest extends readonly unknown[], infer Removed]
-  ? Extends<Removed, Base> extends true
-    ? ExtendsArr<Rest, Base>
-    : false
-  : false;
+export type ExtendsArr<T extends readonly unknown[], Base> =
+  IsEmptyArray<T> extends true
+    ? true
+    : Pop<T, { includeRemoved: true }> extends readonly [
+          infer Rest extends readonly unknown[],
+          infer Removed
+        ]
+      ? Extends<Removed, Base> extends true
+        ? ExtendsArr<Rest, Base>
+        : false
+      : false;

@@ -20,7 +20,9 @@ type SafeKeyTrimming<T> = Exclude<T, symbol>;
 export type TrimLeft<
   Text extends PropertyKey,
   Chars extends PropertyKey = Whitespace
-> = Text extends `${SafeKeyTrimming<Chars>}${infer Rest}` ? TrimLeft<Rest, Chars> : Text;
+> = Text extends `${SafeKeyTrimming<Chars>}${infer Rest}`
+  ? TrimLeft<Rest, Chars>
+  : Text;
 
 /** --------------------------------------------------
  * * ***Utility Type: `TrimRight`.***
@@ -39,7 +41,9 @@ export type TrimLeft<
 export type TrimRight<
   Text extends PropertyKey,
   Chars extends PropertyKey = Whitespace
-> = Text extends `${infer Rest}${SafeKeyTrimming<Chars>}` ? TrimRight<Rest, Chars> : Text;
+> = Text extends `${infer Rest}${SafeKeyTrimming<Chars>}`
+  ? TrimRight<Rest, Chars>
+  : Text;
 
 /** --------------------------------------------------
  * * ***Utility Type: `Trim`.***

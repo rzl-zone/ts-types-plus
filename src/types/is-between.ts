@@ -53,8 +53,9 @@ export type IsBetween<
     minIncluded: true;
     maxIncluded: true;
   }
-> = IsEqual<Num, Min> extends true
-  ? Options["minIncluded"]
-  : IsEqual<Num, Max> extends true
-  ? Options["maxIncluded"]
-  : And<IsGreaterThan<Num, Min>, IsLowerThan<Num, Max>>;
+> =
+  IsEqual<Num, Min> extends true
+    ? Options["minIncluded"]
+    : IsEqual<Num, Max> extends true
+      ? Options["maxIncluded"]
+      : And<IsGreaterThan<Num, Min>, IsLowerThan<Num, Max>>;

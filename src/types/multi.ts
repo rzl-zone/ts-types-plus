@@ -29,69 +29,76 @@ type _MultiSingle<
   DigitOfNum2 extends keyof MultiplicationMap,
   Carry extends number = 0,
   Result extends string = ""
-> = IsEmptyString<Num1> extends true
-  ? ReturnItselfIfNotExtends<RemoveLeading<`${Carry}${Result}`, "0">, "", "0">
-  : IsEqual<Num1, 0> extends true
-  ? "0"
-  : IsEqual<DigitOfNum2, 0> extends true
-  ? "0"
-  : LastCharacter<Num1, { includeRest: true }> extends [
-      infer Num1LastCharacter extends string,
-      infer Num1Rest extends string
-    ]
-  ? Stringify<
-      Sum<
-        MultiplicationMap[DigitOfNum2][ParseNumber<Num1LastCharacter> &
-          keyof MultiplicationMap[DigitOfNum2]],
-        Carry
-      >
-    > extends infer Multiplied extends string
-    ? LastCharacter<Multiplied, { includeRest: true }> extends [
-        infer MultipliedLastDigit extends string,
-        infer MultipliedRest extends string
-      ]
-      ? _MultiSingle<
-          Num1Rest,
-          DigitOfNum2,
-          If<IsNever<ParseNumber<MultipliedRest>>, 0, ParseNumber<MultipliedRest>>,
-          `${MultipliedLastDigit}${Result}`
-        >
-      : never
-    : never
-  : never;
+> =
+  IsEmptyString<Num1> extends true
+    ? ReturnItselfIfNotExtends<RemoveLeading<`${Carry}${Result}`, "0">, "", "0">
+    : IsEqual<Num1, 0> extends true
+      ? "0"
+      : IsEqual<DigitOfNum2, 0> extends true
+        ? "0"
+        : LastCharacter<Num1, { includeRest: true }> extends [
+              infer Num1LastCharacter extends string,
+              infer Num1Rest extends string
+            ]
+          ? Stringify<
+              Sum<
+                MultiplicationMap[DigitOfNum2][ParseNumber<Num1LastCharacter> &
+                  keyof MultiplicationMap[DigitOfNum2]],
+                Carry
+              >
+            > extends infer Multiplied extends string
+            ? LastCharacter<Multiplied, { includeRest: true }> extends [
+                infer MultipliedLastDigit extends string,
+                infer MultipliedRest extends string
+              ]
+              ? _MultiSingle<
+                  Num1Rest,
+                  DigitOfNum2,
+                  If<
+                    IsNever<ParseNumber<MultipliedRest>>,
+                    0,
+                    ParseNumber<MultipliedRest>
+                  >,
+                  `${MultipliedLastDigit}${Result}`
+                >
+              : never
+            : never
+          : never;
 
 type _Multi<
   Num1 extends string,
   Num2 extends string,
   Result extends string = "",
   Iteration extends unknown[] = []
-> = IsEmptyString<Num2> extends true
-  ? Result
-  : LastCharacter<Num2, { includeRest: true }> extends [
-      infer Num2LastCharacter extends string,
-      infer Num2Rest extends string
-    ]
-  ? ParseNumber<Num2LastCharacter> extends infer Num2Digit extends keyof MultiplicationMap
-    ? _Multi<
-        Num1,
-        Num2Rest,
-        Stringify<
-          _Sum<
-            Result,
-            ReturnItselfIfNotExtends<
-              RemoveLeading<
-                `${_MultiSingle<Num1, Num2Digit>}${Repeat<"0", Iteration["length"]>}`,
-                "0"
-              >,
-              "",
-              "0"
-            >
+> =
+  IsEmptyString<Num2> extends true
+    ? Result
+    : LastCharacter<Num2, { includeRest: true }> extends [
+          infer Num2LastCharacter extends string,
+          infer Num2Rest extends string
+        ]
+      ? ParseNumber<Num2LastCharacter> extends infer Num2Digit extends
+          keyof MultiplicationMap
+        ? _Multi<
+            Num1,
+            Num2Rest,
+            Stringify<
+              _Sum<
+                Result,
+                ReturnItselfIfNotExtends<
+                  RemoveLeading<
+                    `${_MultiSingle<Num1, Num2Digit>}${Repeat<"0", Iteration["length"]>}`,
+                    "0"
+                  >,
+                  "",
+                  "0"
+                >
+              >
+            >,
+            Push<Iteration, unknown>
           >
-        >,
-        Push<Iteration, unknown>
-      >
-    : never
-  : Result;
+        : never
+      : Result;
 
 /** -------------------------------------------------------
  * * ***Utility Type: `Multi`.***
@@ -118,19 +125,17 @@ type _Multi<
  *     - `_Multi` ➔ Recursively multiplies digit strings and accumulates the result.
  *     - `_MultiSingle` ➔ Multiplies a string-number with a single digit, handling carry.
  */
-export type Multi<Num1 extends number, Num2 extends number> = IsEqual<
-  Num1,
-  0
-> extends true
-  ? 0
-  : IsEqual<Num2, 0> extends true
-  ? 0
-  : ParseNumber<
-      _Multi<Stringify<Abs<Num1>>, Stringify<Abs<Num2>>>
-    > extends infer Result extends number
-  ? IfNegative<
-      Num1,
-      IfNegative<Num2, Result, Negate<Result>>,
-      IfNegative<Num2, Negate<Result>, Result>
-    >
-  : never;
+export type Multi<Num1 extends number, Num2 extends number> =
+  IsEqual<Num1, 0> extends true
+    ? 0
+    : IsEqual<Num2, 0> extends true
+      ? 0
+      : ParseNumber<
+            _Multi<Stringify<Abs<Num1>>, Stringify<Abs<Num2>>>
+          > extends infer Result extends number
+        ? IfNegative<
+            Num1,
+            IfNegative<Num2, Result, Negate<Result>>,
+            IfNegative<Num2, Negate<Result>, Result>
+          >
+        : never;

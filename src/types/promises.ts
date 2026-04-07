@@ -16,6 +16,35 @@
  */
 export type Awaitable<T> = T | PromiseLike<T>;
 
+/** --------------------------------------------------
+ * * ***Utility Type: `StrictAwaitable`.***
+ * --------------------------------------------------
+ * **Represents a value that may be synchronous or a
+ * native `Promise`.**
+ *
+ * Unlike {@link Awaitable | `Awaitable`}, this type **does not accept
+ * arbitrary thenables (`PromiseLike`)** and only allows
+ * real `Promise` instances.
+ *
+ * This is sometimes preferred for **tooling APIs or
+ * controlled async flows** where supporting generic
+ * thenables is unnecessary or undesirable.
+ *
+ * --------------------------------------------------
+ * @template T - The inner value type.
+ *
+ * @example
+ * ```ts
+ * function maybeAsync<T>(v: StrictAwaitable<T>): Promise<T> {
+ *   return Promise.resolve(v);
+ * }
+ *
+ * maybeAsync(123); // Promise<number>
+ * maybeAsync(Promise.resolve("ok")); // Promise<string>
+ * ```
+ */
+export type StrictAwaitable<T> = T | Promise<T>;
+
 interface CustomPromiseLike<OnSuccess, OnError> {
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -40,7 +69,10 @@ interface CustomPromiseLike<OnSuccess, OnError> {
    * @returns A Promise for the completion of the callback.
    */
   catch<TResult = never>(
-    onrejected?: ((reason: OnError) => TResult | PromiseLike<TResult>) | null | undefined
+    onrejected?:
+      | ((reason: OnError) => TResult | PromiseLike<TResult>)
+      | null
+      | undefined
   ): CustomPromiseType<OnSuccess | TResult, OnError>;
 
   /**

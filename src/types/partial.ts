@@ -2,6 +2,7 @@ import type { Identity } from "./identity";
 import type { IsNever } from "./never";
 import type { AnyString } from "./string";
 import type { PrettifyUnionIntersection } from "./union-to-intersection";
+import type { PrettifyOptions, DefaultPrettifyOptions } from "./prettify";
 
 /** Internal Helper */
 
@@ -18,8 +19,8 @@ type RequiredKeys<T> = Exclude<keyof T, OptionalKeys<T>>;
 type CleanOptional<T> = [T] extends [undefined]
   ? undefined
   : undefined extends T
-  ? Exclude<T, undefined> | undefined
-  : T;
+    ? Exclude<T, undefined> | undefined
+    : T;
 
 /** Required keys only (no optional ones) */
 type RequiredKeysOf<U> = Exclude<keyof U, OptionalKeys<U>>;
@@ -33,6 +34,8 @@ type RequiredKeysOf<U> = Exclude<keyof U, OptionalKeys<U>>;
  * other properties required.**
  * @template T - The object type to transform.
  * @template K - Keys of `T` that should become optional.
+ * @template PrettifyOpts - Options controlling whether the resulting
+ * type should be normalized using the `Prettify` helper.
  * @example
  * ```ts
  * // Only "a" is optional, "b" and "c" remain required
@@ -59,21 +62,24 @@ type RequiredKeysOf<U> = Exclude<keyof U, OptionalKeys<U>>;
  */
 export type PartialOnly<
   T extends object,
-  K extends keyof T | AnyString
-> = IsNever<K> extends true
-  ? T
-  : PrettifyUnionIntersection<
-      {
-        // required keys & not in K ➔ remain required
-        [P in Exclude<RequiredKeys<T>, Extract<keyof T, K>>]-?: T[P];
-      } & {
-        // optional keys & not in K ➔ remain optional (clean duplicate undefined)
-        [P in Exclude<OptionalKeys<T>, Extract<keyof T, K>>]+?: CleanOptional<T[P]>;
-      } & {
-        // keys in K ➔ forced to optional (also clean duplicate undefined)
-        [P in Extract<keyof T, K>]+?: CleanOptional<T[P]>;
-      }
-    >;
+  K extends keyof T | AnyString,
+  PrettifyOpts extends PrettifyOptions = DefaultPrettifyOptions
+> =
+  IsNever<K> extends true
+    ? T
+    : PrettifyUnionIntersection<
+        {
+          // required keys & not in K ➔ remain required
+          [P in Exclude<RequiredKeys<T>, Extract<keyof T, K>>]-?: T[P];
+        } & {
+          // optional keys & not in K ➔ remain optional (clean duplicate undefined)
+          [P in Exclude<OptionalKeys<T>, Extract<keyof T, K>>]+?: CleanOptional<T[P]>;
+        } & {
+          // keys in K ➔ forced to optional (also clean duplicate undefined)
+          [P in Extract<keyof T, K>]+?: CleanOptional<T[P]>;
+        },
+        PrettifyOpts
+      >;
 
 /** -------------------------------------------------------
  * * ***Utility Type: `PartialExcept`.***
@@ -87,6 +93,8 @@ export type PartialOnly<
  *    - Duplicate `undefined` types are cleaned up automatically.
  * @template T - The object type to transform.
  * @template K - Keys of `T` that should remain as-is (not forced optional).
+ * @template PrettifyOpts - Options controlling whether the resulting
+ * type should be normalized using the `Prettify` helper.
  * @example
  * ```ts
  * // "a" remains required, "b" and "c" become optional
@@ -114,33 +122,40 @@ export type PartialOnly<
  */
 export type PartialExcept<
   T extends object,
-  K extends keyof T | AnyString
-> = IsNever<K> extends true
-  ? Partial<T>
-  : PrettifyUnionIntersection<
-      // Step A: build intermediate M that keeps K as-is and makes others Partial
-      // (Keep K exactly as in T via Pick, so optional flags on K are preserved)
-      // then Step B: re-map M splitting optional/required keys and cleaning unions
-      Identity<
-        // final object assembled from required & optional groups derived from M
-        {
-          // required group
-          [P in RequiredKeysOf<
-            Identity<Pick<T, Extract<keyof T, K>> & { [P in Exclude<keyof T, K>]?: T[P] }>
-          >]-?: CleanOptional<
-            Identity<
-              Pick<T, Extract<keyof T, K>> & { [P in Exclude<keyof T, K>]?: T[P] }
-            >[P]
-          >;
-        } & {
-          // optional group
-          [P in OptionalKeys<
-            Identity<Pick<T, Extract<keyof T, K>> & { [P in Exclude<keyof T, K>]?: T[P] }>
-          >]+?: CleanOptional<
-            Identity<
-              Pick<T, Extract<keyof T, K>> & { [P in Exclude<keyof T, K>]?: T[P] }
-            >[P]
-          >;
-        }
-      >
-    >;
+  K extends keyof T | AnyString,
+  PrettifyOpts extends PrettifyOptions = DefaultPrettifyOptions
+> =
+  IsNever<K> extends true
+    ? Partial<T>
+    : PrettifyUnionIntersection<
+        // Step A: build intermediate M that keeps K as-is and makes others Partial
+        // (Keep K exactly as in T via Pick, so optional flags on K are preserved)
+        // then Step B: re-map M splitting optional/required keys and cleaning unions
+        Identity<
+          // final object assembled from required & optional groups derived from M
+          {
+            // required group
+            [P in RequiredKeysOf<
+              Identity<
+                Pick<T, Extract<keyof T, K>> & { [P in Exclude<keyof T, K>]?: T[P] }
+              >
+            >]-?: CleanOptional<
+              Identity<
+                Pick<T, Extract<keyof T, K>> & { [P in Exclude<keyof T, K>]?: T[P] }
+              >[P]
+            >;
+          } & {
+            // optional group
+            [P in OptionalKeys<
+              Identity<
+                Pick<T, Extract<keyof T, K>> & { [P in Exclude<keyof T, K>]?: T[P] }
+              >
+            >]+?: CleanOptional<
+              Identity<
+                Pick<T, Extract<keyof T, K>> & { [P in Exclude<keyof T, K>]?: T[P] }
+              >[P]
+            >;
+          }
+        >,
+        PrettifyOpts
+      >;

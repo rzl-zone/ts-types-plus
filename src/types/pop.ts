@@ -49,8 +49,12 @@ export type Pop<
   Options extends PopOptions = {
     includeRemoved: false;
   }
-> = IsEmptyArray<T> extends true
-  ? never
-  : T extends readonly [...infer Rest extends readonly unknown[], infer Removed]
-  ? If<Options["includeRemoved"], [Rest, Removed], Rest>
-  : never;
+> =
+  IsEmptyArray<T> extends true
+    ? never
+    : T extends readonly [
+          ...infer Rest extends readonly unknown[],
+          infer Removed
+        ]
+      ? If<Options["includeRemoved"], [Rest, Removed], Rest>
+      : never;

@@ -46,7 +46,9 @@ export type EvenDigit = "0" | "2" | "4" | "6" | "8";
  * type C = Integer<3.14>; // ➔ never
  * ```
  */
-export type Integer<T extends number> = `${T}` extends `${string}.${string}` ? never : T;
+export type Integer<T extends number> = `${T}` extends `${string}.${string}`
+  ? never
+  : T;
 
 /** -------------------------------------------------------
  * * ***Utility Type: `Float`.***
@@ -76,7 +78,9 @@ export type Float<T extends number> = If<IsNever<Integer<T>>, T, never>;
  * type C = Negative<0>;   // ➔ never
  * ```
  */
-export type Negative<T extends number> = `${T}` extends `-${string}` ? T : never;
+export type Negative<T extends number> = `${T}` extends `-${string}`
+  ? T
+  : never;
 
 /** -------------------------------------------------------
  * * ***Utility Type: `Positive`.***
@@ -297,7 +301,9 @@ export type IsNegative<T extends number> = Not<IsNever<Negative<T>>>;
  * type D = IsPositiveInteger<3.14>; // ➔ false
  * ```
  */
-export type IsPositiveInteger<T extends number> = Not<IsNever<PositiveInteger<T>>>;
+export type IsPositiveInteger<T extends number> = Not<
+  IsNever<PositiveInteger<T>>
+>;
 
 /** -------------------------------------------------------
  * * ***Utility Type: `IsNegativeInteger`.***
@@ -310,7 +316,9 @@ export type IsPositiveInteger<T extends number> = Not<IsNever<PositiveInteger<T>
  * type C = IsNegativeInteger<-3.14>; // ➔ false
  * ```
  */
-export type IsNegativeInteger<T extends number> = Not<IsNever<NegativeInteger<T>>>;
+export type IsNegativeInteger<T extends number> = Not<
+  IsNever<NegativeInteger<T>>
+>;
 
 /** -------------------------------------------------------
  * * ***Utility Type: `IsPositiveFloat`.***
@@ -482,11 +490,11 @@ export type IfNegative<T extends number, IfTrue = true, IfFalse = false> = If<
  * type D = IfPositiveInteger<-5, "yes", "no">; // ➔ "no"
  * ```
  */
-export type IfPositiveInteger<T extends number, IfTrue = true, IfFalse = false> = If<
-  IsPositiveInteger<T>,
-  IfTrue,
-  IfFalse
->;
+export type IfPositiveInteger<
+  T extends number,
+  IfTrue = true,
+  IfFalse = false
+> = If<IsPositiveInteger<T>, IfTrue, IfFalse>;
 
 /** -------------------------------------------------------
  * * ***Utility Type: `IfNegativeInteger`.***
@@ -504,11 +512,11 @@ export type IfPositiveInteger<T extends number, IfTrue = true, IfFalse = false> 
  * type D = IfNegativeInteger<5, "yes", "no">;   // ➔ "no"
  * ```
  */
-export type IfNegativeInteger<T extends number, IfTrue = true, IfFalse = false> = If<
-  IsNegativeInteger<T>,
-  IfTrue,
-  IfFalse
->;
+export type IfNegativeInteger<
+  T extends number,
+  IfTrue = true,
+  IfFalse = false
+> = If<IsNegativeInteger<T>, IfTrue, IfFalse>;
 
 /** -------------------------------------------------------
  * * ***Utility Type: `IfPositiveFloat`.***
@@ -526,11 +534,11 @@ export type IfNegativeInteger<T extends number, IfTrue = true, IfFalse = false> 
  * type D = IfPositiveFloat<-2.5, "yes", "no">; // ➔ "no"
  * ```
  */
-export type IfPositiveFloat<T extends number, IfTrue = true, IfFalse = false> = If<
-  IsPositiveFloat<T>,
-  IfTrue,
-  IfFalse
->;
+export type IfPositiveFloat<
+  T extends number,
+  IfTrue = true,
+  IfFalse = false
+> = If<IsPositiveFloat<T>, IfTrue, IfFalse>;
 
 /** -------------------------------------------------------
  * * ***Utility Type: `IfNegativeFloat`.***
@@ -548,11 +556,11 @@ export type IfPositiveFloat<T extends number, IfTrue = true, IfFalse = false> = 
  * type D = IfNegativeFloat<2.5, "yes", "no">;   // ➔ "no"
  * ```
  */
-export type IfNegativeFloat<T extends number, IfTrue = true, IfFalse = false> = If<
-  IsNegativeFloat<T>,
-  IfTrue,
-  IfFalse
->;
+export type IfNegativeFloat<
+  T extends number,
+  IfTrue = true,
+  IfFalse = false
+> = If<IsNegativeFloat<T>, IfTrue, IfFalse>;
 
 /** -------------------------------------------------------
  * * ***Utility Type: `ParseNumber`.***
@@ -639,7 +647,7 @@ export type ParseNumber<T extends PropertyKey | bigint> = T extends bigint
       IfExtends<
         OrArr<
           [
-            Extends<`-0`, Trim<Extract<T, PropertyKey>>>,
+            Extends<"-0", Trim<Extract<T, PropertyKey>>>,
             Extends<-0, T>,
             Extends<T, `${"-" | ""}${"0"}.`>
           ]
@@ -648,15 +656,17 @@ export type ParseNumber<T extends PropertyKey | bigint> = T extends bigint
         0,
         T extends `${"-" | ""}0${"x" | "b" | "o"}${number}`
           ? 0
-          : Trim<Extract<T, PropertyKey>> extends `${infer NumT extends number | string}`
-          ? T extends `${infer N extends number}.`
-            ? N
-            : NumT extends string
-            ? ParseScientificNumber<NumT>
-            : NumT
-          : Trim<Extract<T, PropertyKey>> extends number
-          ? T
-          : never
+          : Trim<
+                Extract<T, PropertyKey>
+              > extends `${infer NumT extends number | string}`
+            ? T extends `${infer N extends number}.`
+              ? N
+              : NumT extends string
+                ? ParseScientificNumber<NumT>
+                : NumT
+            : Trim<Extract<T, PropertyKey>> extends number
+              ? T
+              : never
       >,
       never
     >;
@@ -695,17 +705,13 @@ export type IsScientificNumber<T extends string> = Extends<
 >;
 
 /** * ***Helper for {@link ParseScientificNumber | **`ParseScientificNumber`**}.*** */
-type BuildTuple<L extends number, T extends unknown[] = []> = T["length"] extends L
-  ? T
-  : BuildTuple<L, [...T, unknown]>;
+type BuildTuple<
+  L extends number,
+  T extends unknown[] = []
+> = T["length"] extends L ? T : BuildTuple<L, [...T, unknown]>;
 /** * ***Helper for {@link ParseScientificNumber | **`ParseScientificNumber`**}.*** */
-type _DecrementParseScientific<N extends number> = BuildTuple<N> extends [
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  infer _,
-  ...infer Rest
-]
-  ? Rest["length"]
-  : never;
+type _DecrementParseScientific<N extends number> =
+  BuildTuple<N> extends [infer _, ...infer Rest] ? Rest["length"] : never;
 
 /** -------------------------------------------------------
  * * ***Utility Type: `ParseScientificNumber`.***
@@ -736,43 +742,42 @@ type _DecrementParseScientific<N extends number> = BuildTuple<N> extends [
  *  {@link Repeat | **`Repeat`**}.
  * - Returns `0` if TypeScript cannot infer the exact numeric literal.
  */
-export type ParseScientificNumber<T extends string> = T extends `-${infer Mantissa}${
-  | "e"
-  | "E"}-${infer Exp extends number}`
-  ? `-${"0."}${Repeat<
-      "0",
-      _DecrementParseScientific<Exp>
-    >}${Mantissa}` extends `${infer N extends number}`
-    ? number extends N
-      ? 0
-      : N
-    : never
-  : T extends `${infer Mantissa}${"e" | "E"}-${infer Exp extends number}`
-  ? `0.${Repeat<
-      "0",
-      _DecrementParseScientific<Exp>
-    >}${Mantissa}` extends `${infer N extends number}`
-    ? number extends N
-      ? 0
-      : N
-    : never
-  : T extends `-${infer Mantissa}${"e" | "E"}${infer Exp extends number}`
-  ? `-${Mantissa}${Repeat<"0", Exp>}` extends `${infer N extends number}`
-    ? number extends N
-      ? 0
-      : N
-    : never
-  : T extends `${infer Mantissa}${"e" | "E"}${infer Exp extends number}`
-  ? `${Mantissa}${Repeat<"0", Exp>}` extends `${infer N extends number}`
-    ? number extends N
-      ? 0
-      : N
-    : never
-  : T extends `${infer N extends number}`
-  ? number extends N
-    ? 0
-    : N
-  : never;
+export type ParseScientificNumber<T extends string> =
+  T extends `-${infer Mantissa}${"e" | "E"}-${infer Exp extends number}`
+    ? `-${"0."}${Repeat<
+        "0",
+        _DecrementParseScientific<Exp>
+      >}${Mantissa}` extends `${infer N extends number}`
+      ? number extends N
+        ? 0
+        : N
+      : never
+    : T extends `${infer Mantissa}${"e" | "E"}-${infer Exp extends number}`
+      ? `0.${Repeat<
+          "0",
+          _DecrementParseScientific<Exp>
+        >}${Mantissa}` extends `${infer N extends number}`
+        ? number extends N
+          ? 0
+          : N
+        : never
+      : T extends `-${infer Mantissa}${"e" | "E"}${infer Exp extends number}`
+        ? `-${Mantissa}${Repeat<"0", Exp>}` extends `${infer N extends number}`
+          ? number extends N
+            ? 0
+            : N
+          : never
+        : T extends `${infer Mantissa}${"e" | "E"}${infer Exp extends number}`
+          ? `${Mantissa}${Repeat<"0", Exp>}` extends `${infer N extends number}`
+            ? number extends N
+              ? 0
+              : N
+            : never
+          : T extends `${infer N extends number}`
+            ? number extends N
+              ? 0
+              : N
+            : never;
 
 /** -------------------------------------------------------
  * * ***Utility Type: `Abs`.***
@@ -836,4 +841,5 @@ export type Abs<T extends PropertyKey | bigint> = `${Exclude<
  * type Invalid8 = Negate<"0o77">;  // ➔ 0
  * ```
  */
-export type Negate<T extends PropertyKey> = ParseNumber<`-${Abs<ParseNumber<T>>}`>;
+export type Negate<T extends PropertyKey> =
+  ParseNumber<`-${Abs<ParseNumber<T>>}`>;

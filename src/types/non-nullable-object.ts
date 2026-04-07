@@ -1,4 +1,4 @@
-import type { Prettify } from "./prettify";
+import type { DefaultPrettifyOptions, Prettify, PrettifyOptions } from "./prettify";
 
 /** -------------------------------------------------------
  * * ***Utility Type: `NonNullableObject`.***
@@ -11,9 +11,7 @@ import type { Prettify } from "./prettify";
  * // ➔ { a: string; b: number }
  * ```
  */
-export type NonNullableObject<T> = {
-  [K in keyof T]: NonNullable<T[K]>;
-};
+export type NonNullableObject<T> = { [K in keyof T]: NonNullable<T[K]> };
 
 /** -------------------------------------------------------
  * * ***Utility Type: `NonNullableObjectOnly`.***
@@ -21,6 +19,8 @@ export type NonNullableObject<T> = {
  * **Makes only the specified properties `K` of the object type `T` non-nullable.**
  * @template T - Object type to transform.
  * @template K - Keys of `T` to make non-nullable.
+ * @template PrettifyOpts - Options controlling whether the resulting
+ * type should be normalized using the `Prettify` helper.
  * @example
  * ```ts
  * type A = NonNullableObjectOnly<
@@ -30,10 +30,13 @@ export type NonNullableObject<T> = {
  * // ➔ { a: string; b: number; c: boolean | null }
  * ```
  */
-export type NonNullableObjectOnly<T, K extends keyof T> = Prettify<
-  Pick<T, Exclude<keyof T, K>> & {
-    [P in K]: NonNullable<T[P]>;
-  }
+export type NonNullableObjectOnly<
+  T,
+  K extends keyof T,
+  PrettifyOpts extends PrettifyOptions = DefaultPrettifyOptions
+> = Prettify<
+  Pick<T, Exclude<keyof T, K>> & { [P in K]: NonNullable<T[P]> },
+  PrettifyOpts
 >;
 
 /** -------------------------------------------------------
@@ -42,6 +45,8 @@ export type NonNullableObjectOnly<T, K extends keyof T> = Prettify<
  * **Makes all properties of the object type `T` non-nullable except for the specified properties `K`.**
  * @template T - Object type to transform.
  * @template K - Keys of `T` to leave unchanged.
+ * @template PrettifyOpts - Options controlling whether the resulting
+ * type should be normalized using the `Prettify` helper.
  * @example
  * ```ts
  * type A = NonNullableObjectExcept<
@@ -51,8 +56,11 @@ export type NonNullableObjectOnly<T, K extends keyof T> = Prettify<
  * // ➔ { a: string; b: number; c: boolean | null }
  * ```
  */
-export type NonNullableObjectExcept<T, K extends keyof T> = Prettify<
-  Pick<T, K> & {
-    [P in Exclude<keyof T, K>]: NonNullable<T[P]>;
-  }
+export type NonNullableObjectExcept<
+  T,
+  K extends keyof T,
+  PrettifyOpts extends PrettifyOptions = DefaultPrettifyOptions
+> = Prettify<
+  Pick<T, K> & { [P in Exclude<keyof T, K>]: NonNullable<T[P]> },
+  PrettifyOpts
 >;

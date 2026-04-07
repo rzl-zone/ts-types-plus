@@ -7,7 +7,13 @@ import type { Increment } from "./increment";
 import type { IsLowerThan } from "./lower-than";
 import type { Multi } from "./multi";
 import type { IsNever } from "./never";
-import type { Abs, IsNegative, IsPositive, Negate, ParseNumber } from "./number";
+import type {
+  Abs,
+  IsNegative,
+  IsPositive,
+  Negate,
+  ParseNumber
+} from "./number";
 import type { Or } from "./or";
 import type { IsEmptyString } from "./string";
 import type { Stringify } from "./stringify";
@@ -17,13 +23,14 @@ type _FindQuotient<
   Dividend extends number,
   Divisor extends number,
   CurrentQuotient extends number
-> = Multi<Divisor, CurrentQuotient> extends infer Product extends number
-  ? IsEqual<Dividend, Product> extends true
-    ? CurrentQuotient
-    : IsLowerThan<Dividend, Product> extends true
-    ? _FindQuotient<Dividend, Divisor, Decrement<CurrentQuotient>>
-    : CurrentQuotient
-  : never;
+> =
+  Multi<Divisor, CurrentQuotient> extends infer Product extends number
+    ? IsEqual<Dividend, Product> extends true
+      ? CurrentQuotient
+      : IsLowerThan<Dividend, Product> extends true
+        ? _FindQuotient<Dividend, Divisor, Decrement<CurrentQuotient>>
+        : CurrentQuotient
+    : never;
 
 type _Div<
   Dividend extends string,
@@ -32,53 +39,59 @@ type _Div<
   CurrentDividend extends string = "",
   IterationsWithoutDivision extends number = 0,
   HadFirstDivision extends boolean = false
-> = Or<
-  IsEmptyString<CurrentDividend>,
-  IsLowerThan<ParseNumber<CurrentDividend>, Divisor>
-> extends true
-  ? IsEmptyString<Dividend> extends true
-    ? ParseNumber<
-        If<
-          And<HadFirstDivision, IsNotEqual<IterationsWithoutDivision, 0>>,
-          `${Result}0`,
-          Result
+> =
+  Or<
+    IsEmptyString<CurrentDividend>,
+    IsLowerThan<ParseNumber<CurrentDividend>, Divisor>
+  > extends true
+    ? IsEmptyString<Dividend> extends true
+      ? ParseNumber<
+          If<
+            And<HadFirstDivision, IsNotEqual<IterationsWithoutDivision, 0>>,
+            `${Result}0`,
+            Result
+          >
         >
-      >
-    : Dividend extends `${infer FirstDigit extends string}${infer Rest extends string}`
-    ? _Div<
-        Rest,
-        Divisor,
-        If<
-          And<HadFirstDivision, IsNotEqual<IterationsWithoutDivision, 0>>,
-          `${Result}0`,
-          Result
-        >,
-        IfEqual<CurrentDividend, "0", FirstDigit, `${CurrentDividend}${FirstDigit}`>,
-        Increment<IterationsWithoutDivision>,
-        HadFirstDivision
-      >
-    : never
-  : _FindQuotient<
-      ParseNumber<CurrentDividend>,
-      Divisor,
-      10
-    > extends infer Quotient extends number
-  ? IsNever<Quotient> extends true
-    ? ParseNumber<Result>
-    : Sub<
-        ParseNumber<CurrentDividend>,
-        Multi<Quotient, Divisor>
-      > extends infer Remainder extends number
-    ? _Div<
-        Dividend,
-        Divisor,
-        `${Result}${Quotient}`,
-        IfGreaterThan<Remainder, 0, `${Remainder}`, "">,
-        0,
-        true
-      >
-    : never
-  : never;
+      : Dividend extends `${infer FirstDigit extends string}${infer Rest extends string}`
+        ? _Div<
+            Rest,
+            Divisor,
+            If<
+              And<HadFirstDivision, IsNotEqual<IterationsWithoutDivision, 0>>,
+              `${Result}0`,
+              Result
+            >,
+            IfEqual<
+              CurrentDividend,
+              "0",
+              FirstDigit,
+              `${CurrentDividend}${FirstDigit}`
+            >,
+            Increment<IterationsWithoutDivision>,
+            HadFirstDivision
+          >
+        : never
+    : _FindQuotient<
+          ParseNumber<CurrentDividend>,
+          Divisor,
+          10
+        > extends infer Quotient extends number
+      ? IsNever<Quotient> extends true
+        ? ParseNumber<Result>
+        : Sub<
+              ParseNumber<CurrentDividend>,
+              Multi<Quotient, Divisor>
+            > extends infer Remainder extends number
+          ? _Div<
+              Dividend,
+              Divisor,
+              `${Result}${Quotient}`,
+              IfGreaterThan<Remainder, 0, `${Remainder}`, "">,
+              0,
+              true
+            >
+          : never
+      : never;
 
 /** -------------------------------------------------------
  * * ***Utility Type: `Div`.***
@@ -102,24 +115,25 @@ type _Div<
  * type H = Div<5, 0>;   // ➔ never
  * ```
  */
-export type Div<Dividend extends number, Divisor extends number> = IsEqual<
-  Divisor,
-  0
-> extends true
-  ? never
-  : IsEqual<Dividend, 0> extends true
-  ? 0
-  : IsEqual<Dividend, Divisor> extends true
-  ? 1
-  : IsLowerThan<Abs<Dividend>, Abs<Divisor>> extends true
-  ? 0
-  : _Div<Stringify<Abs<Dividend>>, Abs<Divisor>> extends infer Quotient extends number
-  ? If<
-      Or<
-        And<IsNegative<Dividend>, IsNegative<Divisor>>,
-        And<IsPositive<Dividend>, IsPositive<Divisor>>
-      >,
-      Quotient,
-      Negate<Quotient>
-    >
-  : never;
+export type Div<Dividend extends number, Divisor extends number> =
+  IsEqual<Divisor, 0> extends true
+    ? never
+    : IsEqual<Dividend, 0> extends true
+      ? 0
+      : IsEqual<Dividend, Divisor> extends true
+        ? 1
+        : IsLowerThan<Abs<Dividend>, Abs<Divisor>> extends true
+          ? 0
+          : _Div<
+                Stringify<Abs<Dividend>>,
+                Abs<Divisor>
+              > extends infer Quotient extends number
+            ? If<
+                Or<
+                  And<IsNegative<Dividend>, IsNegative<Divisor>>,
+                  And<IsPositive<Dividend>, IsPositive<Divisor>>
+                >,
+                Quotient,
+                Negate<Quotient>
+              >
+            : never;

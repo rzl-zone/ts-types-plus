@@ -12,8 +12,8 @@ type ApplyReadonlyMode<
 > = Mode extends "remove"
   ? { -readonly [K in keyof T]: T[K] }
   : Mode extends "preserve"
-  ? { readonly [K in keyof T]: T[K] }
-  : { [K in keyof T]: T[K] }; // auto ➔  keep original modifiers
+    ? { readonly [K in keyof T]: T[K] }
+    : { [K in keyof T]: T[K] }; // auto ➔  keep original modifiers
 
 /** ---------------------------------------------------------------------------
  * * ***Options for {@link Prettify|`Prettify`}.***
@@ -119,6 +119,18 @@ export type PrettifyOptions = {
    * ```
    */
   readonlyMode?: Extract<"auto" | "remove" | "preserve", string>;
+
+  /** ---------------------------------
+   * * ***Skips applying the prettify transformation.***
+   * ---------------------------------
+   *
+   * When enabled, the output will be returned as-is without running the
+   * prettify step.
+   *
+   * @default false
+   *
+   */
+  skipPrettify?: boolean;
 };
 
 /** -------------------------------------------------------
@@ -127,6 +139,7 @@ export type PrettifyOptions = {
  * **Default options {@link Prettify | **`Prettify`**} used when no custom options are provided.**
  */
 export type DefaultPrettifyOptions = {
+  skipPrettify: false;
   recursive: false;
   readonlyMode: "auto";
 };
@@ -135,10 +148,10 @@ export type DefaultPrettifyOptions = {
 type MergeReadonlyIntersection<T> = T extends readonly any[]
   ? T
   : T extends object
-  ? {
-      [K in keyof T]: T[K];
-    }
-  : T;
+    ? {
+        [K in keyof T]: T[K];
+      }
+    : T;
 
 /** -------------------------------------------------------
  * * ***Utility Type: `Prettify`.***
@@ -223,36 +236,48 @@ type MergeReadonlyIntersection<T> = T extends readonly any[]
  * // ➔ { s: Set<{ a: number } & { b: string }> }
  * ```
  */
-export type Prettify<T, Options extends PrettifyOptions = DefaultPrettifyOptions> =
-  // Skip primitives
-  IsPrimitive<T> extends true
+export type Prettify<
+  T,
+  Options extends PrettifyOptions = DefaultPrettifyOptions
+> = Options["skipPrettify"] extends true
+  ? T
+  : // Skip primitives
+    IsPrimitive<T> extends true
     ? T
     : // Skip functions
-    IsFunction<T> extends true
-    ? T
-    : // Skip constructors
-    IsConstructor<T> extends true
-    ? T
-    : // Arrays & tuples
-    IsArrayOrTuple<T> extends true
-    ? ApplyReadonlyMode<
-        {
-          [K in keyof T]: If<Options["recursive"], Prettify<T[K], Options>, T[K]>;
-        },
-        Options["readonlyMode"]
-      >
-    : // Built-in non-plain objects
-    T extends NonPlainObject
-    ? T
-    : // Plain object
-    T extends object
-    ? ApplyReadonlyMode<
-        MergeReadonlyIntersection<{
-          [K in keyof T]: If<Options["recursive"], Prettify<T[K], Options>, T[K]>;
-        }>,
-        Options["readonlyMode"]
-      >
-    : T;
+      IsFunction<T> extends true
+      ? T
+      : // Skip constructors
+        IsConstructor<T> extends true
+        ? T
+        : // Arrays & tuples
+          IsArrayOrTuple<T> extends true
+          ? ApplyReadonlyMode<
+              {
+                [K in keyof T]: If<
+                  Options["recursive"],
+                  Prettify<T[K], Options>,
+                  T[K]
+                >;
+              },
+              Options["readonlyMode"]
+            >
+          : // Built-in non-plain objects
+            T extends NonPlainObject
+            ? T
+            : // Plain object
+              T extends object
+              ? ApplyReadonlyMode<
+                  MergeReadonlyIntersection<{
+                    [K in keyof T]: If<
+                      Options["recursive"],
+                      Prettify<T[K], Options>,
+                      T[K]
+                    >;
+                  }>,
+                  Options["readonlyMode"]
+                >
+              : T;
 
 /** * ***Accepts a type and returns its simplified version for better readability. Transforms interface to type, simplifies intersections. If `recursive` option is `true` transforms the children object properties as well.***
  * @example
@@ -274,33 +299,45 @@ type PrettifyDeprecated<
   : never;
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-type PrettifyDeprecatedNew<T, Options extends PrettifyOptions = DefaultPrettifyOptions> =
-  // Skip primitives
-  IsPrimitive<T> extends true
+type PrettifyDeprecatedNew<
+  T,
+  Options extends PrettifyOptions = DefaultPrettifyOptions
+> = Options["skipPrettify"] extends true
+  ? T
+  : // Skip primitives
+    IsPrimitive<T> extends true
     ? T
     : // Skip functions
-    IsFunction<T> extends true
-    ? T
-    : // Skip constructors
-    IsConstructor<T> extends true
-    ? T
-    : // Skip arrays & tuples
-    IsArrayOrTuple<T> extends true
-    ? {
-        [K in keyof T]: If<Options["recursive"], Prettify<T[K], Options>, T[K]>;
-      }
-    : // Skip built-in objects
-    T extends NonPlainObject
-    ? T
-    : // Normal object mapping
-    T extends object
-    ? ApplyReadonlyMode<
-        {
-          [K in keyof T]: If<Options["recursive"], Prettify<T[K], Options>, T[K]>;
-        },
-        Options["readonlyMode"]
-      >
-    : T;
+      IsFunction<T> extends true
+      ? T
+      : // Skip constructors
+        IsConstructor<T> extends true
+        ? T
+        : // Skip arrays & tuples
+          IsArrayOrTuple<T> extends true
+          ? {
+              [K in keyof T]: If<
+                Options["recursive"],
+                Prettify<T[K], Options>,
+                T[K]
+              >;
+            }
+          : // Skip built-in objects
+            T extends NonPlainObject
+            ? T
+            : // Normal object mapping
+              T extends object
+              ? ApplyReadonlyMode<
+                  {
+                    [K in keyof T]: If<
+                      Options["recursive"],
+                      Prettify<T[K], Options>,
+                      T[K]
+                    >;
+                  },
+                  Options["readonlyMode"]
+                >
+              : T;
 
 /** --------------------------------------------------
  * * ***PrettifyOld.***

@@ -33,14 +33,15 @@ export type Min<Num1 extends number, Num2 extends number> = IfLowerThan<
 type _MinArr<
   T extends readonly number[],
   CurrentMin extends number = ReturnItselfIfNotExtends<T[0], undefined, never>
-> = IsEmptyArray<T> extends true
-  ? CurrentMin
-  : Shift<T, { includeRemoved: true }> extends [
-      infer Rest extends number[],
-      infer First extends number
-    ]
-  ? _MinArr<Rest, Min<First, CurrentMin>>
-  : never;
+> =
+  IsEmptyArray<T> extends true
+    ? CurrentMin
+    : Shift<T, { includeRemoved: true }> extends [
+          infer Rest extends number[],
+          infer First extends number
+        ]
+      ? _MinArr<Rest, Min<First, CurrentMin>>
+      : never;
 
 /** -------------------------------------------------------
  * * ***Utility Type: `MinArr`.***
@@ -54,6 +55,5 @@ type _MinArr<
  * type Case2 = MinArr<[-1, 4, -10]>;  // ➔ -10
  * ```
  */
-export type MinArr<T extends readonly number[]> = IsTuple<T> extends true
-  ? _MinArr<T>
-  : never;
+export type MinArr<T extends readonly number[]> =
+  IsTuple<T> extends true ? _MinArr<T> : never;

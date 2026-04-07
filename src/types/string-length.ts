@@ -14,20 +14,33 @@ type _StringLength<
 > = S extends ""
   ? _safeSum<Parts>
   : S extends `${infer C1 extends string}${infer Rest1 extends string}`
-  ? Rest1 extends `${infer C2 extends string}${infer Rest2 extends string}`
-    ? Rest2 extends `${infer C3 extends string}${infer Rest3 extends string}`
-      ? Rest3 extends `${infer C4 extends string}${infer Rest4 extends string}`
-        ? _StringLength<
-            Rest4,
-            [[...Parts[0], C1], [...Parts[1], C2], [...Parts[2], C3], [...Parts[3], C4]]
-          >
+    ? Rest1 extends `${infer C2 extends string}${infer Rest2 extends string}`
+      ? Rest2 extends `${infer C3 extends string}${infer Rest3 extends string}`
+        ? Rest3 extends `${infer C4 extends string}${infer Rest4 extends string}`
+          ? _StringLength<
+              Rest4,
+              [
+                [...Parts[0], C1],
+                [...Parts[1], C2],
+                [...Parts[2], C3],
+                [...Parts[3], C4]
+              ]
+            >
+          : _StringLength<
+              Rest3,
+              [
+                [...Parts[0], C1],
+                [...Parts[1], C2],
+                [...Parts[2], C3],
+                Parts[3]
+              ]
+            >
         : _StringLength<
-            Rest3,
-            [[...Parts[0], C1], [...Parts[1], C2], [...Parts[2], C3], Parts[3]]
+            Rest2,
+            [[...Parts[0], C1], [...Parts[1], C2], Parts[2], Parts[3]]
           >
-      : _StringLength<Rest2, [[...Parts[0], C1], [...Parts[1], C2], Parts[2], Parts[3]]>
-    : _StringLength<Rest1, [[...Parts[0], C1], Parts[1], Parts[2], Parts[3]]>
-  : _StringLength<S, Parts>;
+      : _StringLength<Rest1, [[...Parts[0], C1], Parts[1], Parts[2], Parts[3]]>
+    : _StringLength<S, Parts>;
 
 /** -------------------------------------------------------
  * * ***Utility Type: `StringLength`.***
@@ -74,17 +87,24 @@ export type CompareStringLength<
   IfStr1Shorter = never,
   IfStr2Shorter = never,
   IfEqual = never
-> = IsEmptyString<Str1> extends true
-  ? IsEmptyString<Str2> extends true
-    ? IfEqual
-    : IfStr1Shorter
-  : IsEmptyString<Str2> extends true
-  ? IfStr2Shorter
-  : Str1 extends `${string}${infer Str1Rest extends string}`
-  ? Str2 extends `${string}${infer Str2Rest extends string}`
-    ? CompareStringLength<Str1Rest, Str2Rest, IfStr1Shorter, IfStr2Shorter, IfEqual>
-    : never
-  : never;
+> =
+  IsEmptyString<Str1> extends true
+    ? IsEmptyString<Str2> extends true
+      ? IfEqual
+      : IfStr1Shorter
+    : IsEmptyString<Str2> extends true
+      ? IfStr2Shorter
+      : Str1 extends `${string}${infer Str1Rest extends string}`
+        ? Str2 extends `${string}${infer Str2Rest extends string}`
+          ? CompareStringLength<
+              Str1Rest,
+              Str2Rest,
+              IfStr1Shorter,
+              IfStr2Shorter,
+              IfEqual
+            >
+          : never
+        : never;
 
 /** -------------------------------------------------------
  * * ***Utility Type: `IsShorterString`.***

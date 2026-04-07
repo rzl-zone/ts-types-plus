@@ -17,24 +17,24 @@
     "url": "https://github.com/rzl-zone/ts-types-plus/issues"
   },
   "devDependencies": {
-    "@eslint/js": "^9.31.0",
-    "@types/node": "^20.19.11",
+    "@eslint/js": "^10",
+    "@types/node": "^20.19.39",
     "chalk": "^5.6.2",
-    "del-cli": "^6.0.0",
-    "eslint": "^9.31.0",
-    "terser": "^5.44.0",
-    "tsup": "^8.5.0",
-    "tsx": "^4.20.3",
-    "type-fest": "^5.0.1",
-    "typescript": "^5.9.2",
-    "typescript-eslint": "^8.44.0"
+    "del-cli": "^7.0.0",
+    "eslint": "^10",
+    "terser": "^5.46.1",
+    "tsup": "^8.5.1",
+    "tsx": "^4.21.0",
+    "type-fest": "^5.5.0",
+    "typescript": "^6.0.2",
+    "typescript-eslint": "^8.58.0"
   },
   "engines": {
     "node": ">=18.18.0"
   },
   "peerDependencies": {
-    "typescript": ">=5.9.0",
-    "@types/node": ">=18.18.0"
+    "@types/node": ">=18.18.0",
+    "typescript": ">=5.9.0"
   },
   "exports": {
     "./runtime": {
@@ -97,6 +97,7 @@
     "minify:dts-dist": "tsx scripts/minifyDtsDist && npm run copy:dist-type ",
     "copy:dist-type": "tsx scripts/copyDistType.ts",
     "check-publish": "npm run build && npm pack --dry-run",
-    "release-patch": "npm version patch && git push && git push --tags && npm publish"
+    "release-patch": "npm version patch && git push && git push --tags && npm publish",
+    "tsc:check": "tsc --noEmit"
   }
 }

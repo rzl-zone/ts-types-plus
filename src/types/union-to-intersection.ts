@@ -1,6 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import type { DefaultPrettifyOptions, Prettify, PrettifyOptions } from "./prettify";
+import type {
+  DefaultPrettifyOptions,
+  Prettify,
+  PrettifyOptions as PrettifyOpts
+} from "./prettify";
 
 /** -------------------------------------------------------
  * * ***Utility Type: `UnionToIntersection`.***
@@ -19,9 +23,9 @@ import type { DefaultPrettifyOptions, Prettify, PrettifyOptions } from "./pretti
  * // ➔ { a: string } & { b: number } & { c: boolean }
  * ```
  */
-export type UnionToIntersection<U> = (U extends any ? (k: U) => void : never) extends (
-  k: infer I
-) => void
+export type UnionToIntersection<U> = (
+  U extends any ? (k: U) => void : never
+) extends (k: infer I) => void
   ? I
   : never;
 
@@ -35,7 +39,8 @@ export type UnionToIntersection<U> = (U extends any ? (k: U) => void : never) ex
  * Useful when the raw intersection of union types produces
  * deeply nested or hard-to-read structures.
  * @template T - The union type to be converted.
- * @template Options - Optional formatting options for `Prettify`.
+ * @template Options - Options controlling whether the resulting
+ * type should be normalized using the `Prettify` helper.
  * @example
  * ```ts
  * // Basic union ➔ intersection
@@ -56,5 +61,5 @@ export type UnionToIntersection<U> = (U extends any ? (k: U) => void : never) ex
  */
 export type PrettifyUnionIntersection<
   T,
-  Options extends PrettifyOptions = DefaultPrettifyOptions
+  Options extends PrettifyOpts = DefaultPrettifyOptions
 > = Prettify<UnionToIntersection<T>, Options>;

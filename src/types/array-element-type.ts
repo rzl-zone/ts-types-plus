@@ -16,8 +16,5 @@
  * // ➔ never
  * ```
  */
-export type ArrayElementType<T extends readonly unknown[]> = T extends Readonly<
-  Array<infer Item>
->
-  ? Item
-  : never;
+export type ArrayElementType<T extends readonly unknown[]> =
+  T extends Readonly<Array<infer Item>> ? Item : never;

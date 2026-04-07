@@ -25,4 +25,6 @@ import type { AnyStringRecord } from "./record";
  * // ➔ string
  * ```
  */
-export type LooseLiteral<Literal, BaseType> = Literal | (BaseType & AnyStringRecord);
+export type LooseLiteral<Literal, BaseType> =
+  | Literal
+  | (BaseType & AnyStringRecord);

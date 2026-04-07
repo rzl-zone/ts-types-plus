@@ -44,7 +44,7 @@ export type IndexOf<
     ? _IndexOfString<T, Pivot>
     : never
   : T extends readonly unknown[]
-  ? IsTuple<T> extends true
-    ? _IndexOfArray<T, Pivot>
-    : never
-  : never;
+    ? IsTuple<T> extends true
+      ? _IndexOfArray<T, Pivot>
+      : never
+    : never;

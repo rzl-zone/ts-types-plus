@@ -39,7 +39,7 @@ export type Split<
 > = string extends Str
   ? string[]
   : "" extends Str
-  ? []
-  : Str extends `${infer T}${Del}${infer U}`
-  ? [T, ...Split<U, Del>]
-  : [Str];
+    ? []
+    : Str extends `${infer T}${Del}${infer U}`
+      ? [T, ...Split<U, Del>]
+      : [Str];

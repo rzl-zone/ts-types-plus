@@ -13,7 +13,7 @@
  * type D = EndsWith<"Hello", "world">; // ➔ false
  * ```
  */
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-export type EndsWith<T extends string, C extends string> = T extends `${infer _}${C}`
-  ? true
-  : false;
+export type EndsWith<
+  T extends string,
+  C extends string
+> = T extends `${infer _}${C}` ? true : false;

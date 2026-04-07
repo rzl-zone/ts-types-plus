@@ -23,11 +23,12 @@ import type { IsTuple } from "./is-tuple";
 export type Join<
   T extends readonly (string | number)[],
   Glue extends string | number = ""
-> = IsTuple<T> extends true
-  ? T extends readonly [
-      infer First extends string | number,
-      ...infer Rest extends readonly (string | number)[]
-    ]
-    ? IfEmptyArray<Rest, First, `${First}${Glue}${Join<Rest, Glue>}`>
-    : never
-  : never;
+> =
+  IsTuple<T> extends true
+    ? T extends readonly [
+        infer First extends string | number,
+        ...infer Rest extends readonly (string | number)[]
+      ]
+      ? IfEmptyArray<Rest, First, `${First}${Glue}${Join<Rest, Glue>}`>
+      : never
+    : never;

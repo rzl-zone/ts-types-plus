@@ -20,8 +20,9 @@ import type { IsFloat, IsNegative } from "./number";
  * type E = GetFloatNumberParts<42>;     // ➔ never (not a float)
  * ```
  */
-export type GetFloatNumberParts<T extends number> = IsFloat<T> extends true
-  ? `${T}` extends `${infer Whole extends number}.${infer Fraction extends number}`
-    ? [IsNegative<T> extends true ? Whole : Whole, Fraction]
-    : never
-  : never;
+export type GetFloatNumberParts<T extends number> =
+  IsFloat<T> extends true
+    ? `${T}` extends `${infer Whole extends number}.${infer Fraction extends number}`
+      ? [IsNegative<T> extends true ? Whole : Whole, Fraction]
+      : never
+    : never;

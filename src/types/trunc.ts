@@ -35,9 +35,9 @@ import type { IsFloat, IsNegative, Negate } from "./number";
 export type Trunc<T extends number> = number extends T
   ? T
   : IsFloat<T> extends true
-  ? GetFloatNumberParts<T>[0] extends infer IntegerPart extends number
-    ? IsNegative<T> extends true
-      ? Negate<IntegerPart>
-      : IntegerPart
-    : never
-  : T;
+    ? GetFloatNumberParts<T>[0] extends infer IntegerPart extends number
+      ? IsNegative<T> extends true
+        ? Negate<IntegerPart>
+        : IntegerPart
+      : never
+    : T;

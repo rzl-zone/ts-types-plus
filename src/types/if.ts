@@ -16,6 +16,8 @@
  * // ➔ "invalid"
  * ```
  */
-export type If<Condition, IfTrue = true, IfFalse = false> = Condition extends true
-  ? IfTrue
-  : IfFalse;
+export type If<
+  Condition,
+  IfTrue = true,
+  IfFalse = false
+> = Condition extends true ? IfTrue : IfFalse;

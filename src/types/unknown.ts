@@ -13,11 +13,8 @@ import type { If } from "./if";
  * type FalseResult2 = IsUnknown<string>; // ➔ false
  * ```
  */
-export type IsUnknown<T> = IsAny<T> extends true
-  ? false
-  : [unknown] extends [T]
-  ? true
-  : false;
+export type IsUnknown<T> =
+  IsAny<T> extends true ? false : [unknown] extends [T] ? true : false;
 
 /** -------------------------------------------------------
  * * ***Utility Type: `IfUnknown`.***

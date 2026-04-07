@@ -22,10 +22,11 @@ import type { GetFloatNumberParts } from "./get-float-number-parts";
  * type F = Ceil<-5>;   // ➔ -5
  * ```
  */
-export type Ceil<T extends number> = IsFloat<T> extends true
-  ? GetFloatNumberParts<T> extends [infer Whole extends number, unknown]
-    ? IsNegative<T> extends true
-      ? Negate<Whole>
-      : Increment<Whole>
-    : never
-  : T;
+export type Ceil<T extends number> =
+  IsFloat<T> extends true
+    ? GetFloatNumberParts<T> extends [infer Whole extends number, unknown]
+      ? IsNegative<T> extends true
+        ? Negate<Whole>
+        : Increment<Whole>
+      : never
+    : T;

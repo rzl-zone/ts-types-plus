@@ -171,5 +171,5 @@ export type KeepUndef<T> = undefined extends T ? undefined : never;
 export type NullToUndefined<T> = T extends null
   ? undefined
   : T extends undefined
-  ? undefined
-  : T;
+    ? undefined
+    : T;

@@ -34,13 +34,14 @@ import type { Increment } from "./increment";
  * // ➔ 5
  * ```
  */
-export type Round<T extends number> = IsFloat<T> extends true
-  ? GetFloatNumberParts<T> extends [
-      infer Whole extends number,
-      infer Fraction extends number
-    ]
-    ? IsGreaterThan<FirstDigit<Fraction>, 4> extends true
-      ? Increment<Whole>
-      : Whole
-    : never
-  : T;
+export type Round<T extends number> =
+  IsFloat<T> extends true
+    ? GetFloatNumberParts<T> extends [
+        infer Whole extends number,
+        infer Fraction extends number
+      ]
+      ? IsGreaterThan<FirstDigit<Fraction>, 4> extends true
+        ? Increment<Whole>
+        : Whole
+      : never
+    : T;

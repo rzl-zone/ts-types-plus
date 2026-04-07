@@ -40,10 +40,13 @@ export type FirstDigit<
      */
     alwaysPositive?: boolean;
   } = { alwaysPositive: false }
-> = DigitsTuple<T>["digits"] extends readonly [infer First extends number, ...unknown[]]
+> = DigitsTuple<T>["digits"] extends readonly [
+  infer First extends number,
+  ...unknown[]
+]
   ? Options["alwaysPositive"] extends true
     ? First
     : DigitsTuple<T>["negative"] extends true
-    ? Negate<First>
-    : First
+      ? Negate<First>
+      : First
   : never;

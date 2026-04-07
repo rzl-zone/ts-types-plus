@@ -98,14 +98,14 @@ type ApplyDefaultOptions<
           tra: "test";
         }
       : Or<
-          IsEqual<OverwriteDefault, true>,
-          And<
-            Extends<K, keyof OverwriteRules>,
-            Extends<OverwriteRules[K & keyof OverwriteRules], true>
-          >
-        > extends true
-      ? Options[K]
-      : Options[K] | DefaultOptions[K]
+            IsEqual<OverwriteDefault, true>,
+            And<
+              Extends<K, keyof OverwriteRules>,
+              Extends<OverwriteRules[K & keyof OverwriteRules], true>
+            >
+          > extends true
+        ? Options[K]
+        : Options[K] | DefaultOptions[K]
     : DefaultOptions[K];
 }>;
 
@@ -192,26 +192,29 @@ type _PathToFieldsArray<
   T extends readonly unknown[],
   Options extends PathToFieldsOptions,
   Iteration extends number = 0
-> = And<
-  IsTuple<T>,
-  IsEqual<
-    Booleanize<Options["arrayIndexing"] extends { exactIndexes: infer E } ? E : false>,
-    true
-  >
-> extends true
-  ? ValueOfArray<{
-      [K in keyof T]: IsArrayIndex<K> extends true
-        ? [K, ..._PathToFields<T[K], Options, Increment<Iteration>>]
-        : never;
-    }>
-  : ArrayElementType<T> extends infer ElementType
-  ? [
-      `${number}`,
-      ...(ElementType extends ElementType
-        ? _PathToFields<ElementType, Options, Increment<Iteration>>
-        : never)
-    ]
-  : never;
+> =
+  And<
+    IsTuple<T>,
+    IsEqual<
+      Booleanize<
+        Options["arrayIndexing"] extends { exactIndexes: infer E } ? E : false
+      >,
+      true
+    >
+  > extends true
+    ? ValueOfArray<{
+        [K in keyof T]: IsArrayIndex<K> extends true
+          ? [K, ..._PathToFields<T[K], Options, Increment<Iteration>>]
+          : never;
+      }>
+    : ArrayElementType<T> extends infer ElementType
+      ? [
+          `${number}`,
+          ...(ElementType extends ElementType
+            ? _PathToFields<ElementType, Options, Increment<Iteration>>
+            : never)
+        ]
+      : never;
 
 type _PathToFields<
   T,
@@ -220,20 +223,31 @@ type _PathToFields<
 > = T extends Options["ignoredTypes"]
   ? never
   : T extends Options["stopTypes"]
-  ? []
-  : IsEqual<Iteration, Options["limit"]> extends true
-  ? never
-  : T extends readonly unknown[]
-  ? _PathToFieldsArray<T, Options, Iteration>
-  : ValueOf<{
-      [K in Exclude<keyof T, symbol | Options["ignoredKeys"]>]: NonNullable<
-        T[K]
-      > extends infer NonNullableFields
-        ? NonNullableFields extends readonly unknown[]
-          ? [K, ..._PathToFieldsArray<NonNullableFields, Options, Iteration>]
-          : [K, ..._PathToFields<NonNullableFields, Options, Increment<Iteration>>]
-        : never;
-    }>;
+    ? []
+    : IsEqual<Iteration, Options["limit"]> extends true
+      ? never
+      : T extends readonly unknown[]
+        ? _PathToFieldsArray<T, Options, Iteration>
+        : ValueOf<{
+            [K in Exclude<
+              keyof T,
+              symbol | Options["ignoredKeys"]
+            >]: NonNullable<T[K]> extends infer NonNullableFields
+              ? NonNullableFields extends readonly unknown[]
+                ? [
+                    K,
+                    ..._PathToFieldsArray<NonNullableFields, Options, Iteration>
+                  ]
+                : [
+                    K,
+                    ..._PathToFields<
+                      NonNullableFields,
+                      Options,
+                      Increment<Iteration>
+                    >
+                  ]
+              : never;
+          }>;
 
 /** -------------------------------------------------------
  * * ***Utility Type: `PathToFields`.***

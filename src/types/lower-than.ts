@@ -26,8 +26,8 @@ type _IsLowerThan<
     ? IsEqual<Num1Character, Num2Character> extends true
       ? _IsLowerThan<Num1Rest, Num2Rest>
       : Num2Character extends LowerThanMap[Num1Character][number]
-      ? true
-      : false
+        ? true
+        : false
     : true
   : false;
 
@@ -42,30 +42,28 @@ type _IsLowerThan<
  * type Case1 = IsLowerThan<1, 10>;  // ➔ true
  * type Case2 = IsLowerThan<1, -10>; // ➔ false
  */
-export type IsLowerThan<Num1 extends number, Num2 extends number> = IsEqual<
-  Num1,
-  Num2
-> extends true
-  ? false
-  : IsNegative<Num1> extends true
-  ? IsNegative<Num2> extends false
-    ? true
-    : CompareNumberLength<
-        Num1,
-        Num2,
-        false,
-        true,
-        Not<_IsLowerThan<Stringify<Abs<Num1>>, Stringify<Abs<Num2>>>>
-      >
-  : IsNegative<Num2> extends true
-  ? false
-  : CompareNumberLength<
-      Num1,
-      Num2,
-      true,
-      false,
-      _IsLowerThan<Stringify<Abs<Num1>>, Stringify<Abs<Num2>>>
-    >;
+export type IsLowerThan<Num1 extends number, Num2 extends number> =
+  IsEqual<Num1, Num2> extends true
+    ? false
+    : IsNegative<Num1> extends true
+      ? IsNegative<Num2> extends false
+        ? true
+        : CompareNumberLength<
+            Num1,
+            Num2,
+            false,
+            true,
+            Not<_IsLowerThan<Stringify<Abs<Num1>>, Stringify<Abs<Num2>>>>
+          >
+      : IsNegative<Num2> extends true
+        ? false
+        : CompareNumberLength<
+            Num1,
+            Num2,
+            true,
+            false,
+            _IsLowerThan<Stringify<Abs<Num1>>, Stringify<Abs<Num2>>>
+          >;
 
 /** -------------------------------------------------------
  * * ***Utility Type: `IfLowerThan`.***
@@ -102,12 +100,8 @@ export type IfLowerThan<
  * type Case2 = IsLowerOrEqual<1, -10>;
  * // ➔ false
  */
-export type IsLowerOrEqual<Num1 extends number, Num2 extends number> = IsEqual<
-  Num1,
-  Num2
-> extends true
-  ? true
-  : IsLowerThan<Num1, Num2>;
+export type IsLowerOrEqual<Num1 extends number, Num2 extends number> =
+  IsEqual<Num1, Num2> extends true ? true : IsLowerThan<Num1, Num2>;
 
 /** -------------------------------------------------------
  * * ***Utility Type: `IfLowerOrEqual`.***

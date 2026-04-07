@@ -98,81 +98,93 @@ export type IsBaseType<T> =
   IsAny<T> extends true
     ? true
     : IsUnknown<T> extends true
-    ? true
-    : IsNever<T> extends true
-    ? true
-    : IsExactly<T, null> extends true
-    ? true
-    : IsExactly<T, undefined> extends true
-    ? true
-    : IsExactly<T, void> extends true
-    ? true
-    : // primitives
-    IsExactly<T, string> extends true
-    ? true
-    : IsExactly<T, number> extends true
-    ? true
-    : IsExactly<T, boolean> extends true
-    ? true
-    : IsExactly<T, bigint> extends true
-    ? true
-    : IsExactly<T, symbol> extends true
-    ? true
-    : // function keyword / AnyFunction
-    IsExactly<T, Function> extends true
-    ? true
-    : IsExactly<T, AnyFunction> extends true
-    ? true
-    : // array (general)
-    IsGeneralArray<T> extends true
-    ? true
-    : IsExactly<T, TypedArray> extends true
-    ? true
-    : // common built-ins
-    IsExactly<T, Date> extends true
-    ? true
-    : IsExactly<T, RegExp> extends true
-    ? true
-    : IsExactly<T, Error> extends true
-    ? true
-    : // generic containers (recursive)
-    T extends Promise<infer U>
-    ? IsBaseType<U> extends true
       ? true
-      : false
-    : T extends Map<infer K, infer V>
-    ? IsBaseType<K> extends true
-      ? IsBaseType<V> extends true
+      : IsNever<T> extends true
         ? true
-        : false
-      : false
-    : T extends WeakMap<infer K, infer V>
-    ? K extends object
-      ? IsBaseType<V> extends true
-        ? true
-        : false
-      : false
-    : T extends Set<infer U>
-    ? IsBaseType<U> extends true
-      ? true
-      : false
-    : T extends WeakSet<infer U>
-    ? U extends object
-      ? true
-      : false
-    : // buffers & typed views
-    IsExactly<T, ArrayBuffer> extends true
-    ? true
-    : IsExactly<T, SharedArrayBuffer> extends true
-    ? true
-    : IsExactly<T, DataView> extends true
-    ? true
-    : // plain object {}
-    IsExactly<T, {}> extends true
-    ? true
-    : // `object` keyword
-    [T] extends [object]
-    ? [object] extends [T]
-      ? true
-      : false
-    : false;
+        : IsExactly<T, null> extends true
+          ? true
+          : IsExactly<T, undefined> extends true
+            ? true
+            : IsExactly<T, void> extends true
+              ? true
+              : // primitives
+                IsExactly<T, string> extends true
+                ? true
+                : IsExactly<T, number> extends true
+                  ? true
+                  : IsExactly<T, boolean> extends true
+                    ? true
+                    : IsExactly<T, bigint> extends true
+                      ? true
+                      : IsExactly<T, symbol> extends true
+                        ? true
+                        : // function keyword / AnyFunction
+                          IsExactly<T, Function> extends true
+                          ? true
+                          : IsExactly<T, AnyFunction> extends true
+                            ? true
+                            : // array (general)
+                              IsGeneralArray<T> extends true
+                              ? true
+                              : IsExactly<T, TypedArray> extends true
+                                ? true
+                                : // common built-ins
+                                  IsExactly<T, Date> extends true
+                                  ? true
+                                  : IsExactly<T, RegExp> extends true
+                                    ? true
+                                    : IsExactly<T, Error> extends true
+                                      ? true
+                                      : // generic containers (recursive)
+                                        T extends Promise<infer U>
+                                        ? IsBaseType<U> extends true
+                                          ? true
+                                          : false
+                                        : T extends Map<infer K, infer V>
+                                          ? IsBaseType<K> extends true
+                                            ? IsBaseType<V> extends true
+                                              ? true
+                                              : false
+                                            : false
+                                          : T extends WeakMap<infer K, infer V>
+                                            ? K extends object
+                                              ? IsBaseType<V> extends true
+                                                ? true
+                                                : false
+                                              : false
+                                            : T extends Set<infer U>
+                                              ? IsBaseType<U> extends true
+                                                ? true
+                                                : false
+                                              : T extends WeakSet<infer U>
+                                                ? U extends object
+                                                  ? true
+                                                  : false
+                                                : // buffers & typed views
+                                                  IsExactly<
+                                                      T,
+                                                      ArrayBuffer
+                                                    > extends true
+                                                  ? true
+                                                  : IsExactly<
+                                                        T,
+                                                        SharedArrayBuffer
+                                                      > extends true
+                                                    ? true
+                                                    : IsExactly<
+                                                          T,
+                                                          DataView
+                                                        > extends true
+                                                      ? true
+                                                      : // plain object {}
+                                                        IsExactly<
+                                                            T,
+                                                            {}
+                                                          > extends true
+                                                        ? true
+                                                        : // `object` keyword
+                                                          [T] extends [object]
+                                                          ? [object] extends [T]
+                                                            ? true
+                                                            : false
+                                                          : false;

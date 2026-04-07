@@ -1,6 +1,6 @@
 import type { And } from "./and";
 import type { Extends } from "./extends";
-import type { Prettify } from "./prettify";
+import type { Prettify, PrettifyOptions, DefaultPrettifyOptions } from "./prettify";
 
 /** ---------------------------------------------------------------------------
  * * ***Options for {@link Mutable | `Mutable`}.***
@@ -22,6 +22,20 @@ export type MutableOptions = {
    * @default false
    */
   recursive: boolean;
+
+  /** * ***Options forwarded to {@link Prettify | `Prettify`}.***
+   *
+   * Controls how the resulting type is **normalized or formatted**
+   * after the `readonly` modifiers are removed.
+   *
+   * - ***This can be useful to:***
+   *    - Flatten intersections.
+   *    - Normalize mapped types.
+   *    - Improve editor type hints.
+   *
+   * @default DefaultPrettifyOptions
+   */
+  prettifyOptions?: PrettifyOptions;
 };
 
 /** -------------------------------------------------------
@@ -30,7 +44,8 @@ export type MutableOptions = {
  * **Removes `readonly` from all properties of the passed type `T`.**
  * - If `Options["recursive"]` is `true`, nested objects are also made mutable.
  * @template T - The type to make mutable.
- * @template Options - Configuration options. Default: `{ recursive: false }`.
+ * @template Options - Configuration options. Default:
+ * `{ recursive: false, prettifyOptions: DefaultPrettifyOptions }`.
  * @example
  * ```ts
  * type Case1 = Mutable<{ readonly a: { readonly b: string } }>;
@@ -39,7 +54,13 @@ export type MutableOptions = {
  * // ➔ { a: { b: string } } (nested properties also mutable)
  * ```
  */
-export type Mutable<T, Options extends MutableOptions = { recursive: false }> = Prettify<{
+export type Mutable<
+  T,
+  Options extends MutableOptions = {
+    recursive: false;
+    prettifyOptions: DefaultPrettifyOptions;
+  }
+> = Prettify<{
   -readonly [K in keyof T]: And<Options["recursive"], Extends<T[K], object>> extends true
     ? Mutable<T[K], Options>
     : T[K];
@@ -51,6 +72,8 @@ export type Mutable<T, Options extends MutableOptions = { recursive: false }> = 
  * **Removes `readonly` only from the specified keys `K` of type `T`.**
  * @template T - The type to modify.
  * @template K - Keys to make mutable.
+ * @template PrettifyOpts - Options controlling whether the resulting
+ * type should be normalized using the `Prettify` helper.
  * @example
  * ```ts
  * type Case1 = MutableOnly<{ readonly a: string; readonly b: string }, "a">;
@@ -59,11 +82,11 @@ export type Mutable<T, Options extends MutableOptions = { recursive: false }> = 
  * // ➔ { a: string; b: string }
  * ```
  */
-export type MutableOnly<T, K extends keyof T> = Prettify<
-  Pick<T, Exclude<keyof T, K>> & {
-    -readonly [P in K]: T[P];
-  }
->;
+export type MutableOnly<
+  T,
+  K extends keyof T,
+  PrettifyOpts extends PrettifyOptions = DefaultPrettifyOptions
+> = Prettify<Pick<T, Exclude<keyof T, K>> & { -readonly [P in K]: T[P] }, PrettifyOpts>;
 
 /** -------------------------------------------------------
  * * ***Utility Type: `MutableExcept`.***
@@ -71,6 +94,8 @@ export type MutableOnly<T, K extends keyof T> = Prettify<
  * **Removes `readonly` from all properties of `T` **except** the specified keys `K`.**
  * @template T - The type to modify.
  * @template K - Keys to keep as readonly.
+ * @template PrettifyOpts - Options controlling whether the resulting
+ * type should be normalized using the `Prettify` helper.
  * @example
  * ```ts
  * type Case1 = MutableExcept<{ readonly a: string; readonly b: string }, "b">;
@@ -79,8 +104,8 @@ export type MutableOnly<T, K extends keyof T> = Prettify<
  * // ➔ { a: string; b: string } (all except "a" made mutable)
  * ```
  */
-export type MutableExcept<T, K extends keyof T> = Prettify<
-  Pick<T, K> & {
-    -readonly [P in Exclude<keyof T, K>]: T[P];
-  }
->;
+export type MutableExcept<
+  T,
+  K extends keyof T,
+  PrettifyOpts extends PrettifyOptions = DefaultPrettifyOptions
+> = Prettify<Pick<T, K> & { -readonly [P in Exclude<keyof T, K>]: T[P] }, PrettifyOpts>;

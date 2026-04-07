@@ -24,10 +24,12 @@ type Grouped<T extends readonly unknown[]> = [
   ...FilterByType<T, Exclude<T[number], number | string | boolean>>
 ];
 
-type MaybeReadonly<
-  T extends readonly unknown[],
-  R extends readonly unknown[]
-> = IsTuple<T> extends true ? (IsReadonlyArray<T> extends true ? Readonly<R> : R) : R; // non-tuple tetap mutable
+type MaybeReadonly<T extends readonly unknown[], R extends readonly unknown[]> =
+  IsTuple<T> extends true
+    ? IsReadonlyArray<T> extends true
+      ? Readonly<R>
+      : R
+    : R; // non-tuple tetap mutable
 
 /** -------------------------------------------------------
  * * ***Utility Type: `Reverse`.***

@@ -19,9 +19,9 @@ import type { IsInteger, ParseNumber } from "./number";
 export type IsArrayIndex<T> = T extends number
   ? And<IsInteger<T>, IsGreaterOrEqual<T, 0>>
   : T extends string
-  ? ParseNumber<T> extends infer NumT extends number
-    ? Not<IsNever<NumT>> extends true
-      ? And<IsInteger<NumT>, IsGreaterOrEqual<NumT, 0>>
+    ? ParseNumber<T> extends infer NumT extends number
+      ? Not<IsNever<NumT>> extends true
+        ? And<IsInteger<NumT>, IsGreaterOrEqual<NumT, 0>>
+        : false
       : false
-    : false
-  : never;
+    : never;

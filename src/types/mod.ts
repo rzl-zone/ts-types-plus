@@ -21,11 +21,9 @@ import type { Sub } from "./sub";
  * type T3 = Mod<7, 7>;  // ➔ 0
  * ```
  */
-export type Mod<Dividend extends number, Divisor extends number> = Div<
-  Dividend,
-  Divisor
-> extends infer Quotient extends number
-  ? Multi<Quotient, Divisor> extends infer Product extends number
-    ? Sub<Dividend, Product>
-    : never
-  : never;
+export type Mod<Dividend extends number, Divisor extends number> =
+  Div<Dividend, Divisor> extends infer Quotient extends number
+    ? Multi<Quotient, Divisor> extends infer Product extends number
+      ? Sub<Dividend, Product>
+      : never
+    : never;

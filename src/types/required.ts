@@ -2,6 +2,7 @@ import type { IsNever } from "./never";
 import type { NonUndefined } from "./nils";
 import type { AnyString } from "./string";
 import type { PrettifyUnionIntersection } from "./union-to-intersection";
+import type { PrettifyOptions, DefaultPrettifyOptions } from "./prettify";
 
 /** Internal Helper */
 
@@ -14,6 +15,8 @@ type CleanOptional<T> = [T] extends [undefined] ? undefined : T;
  * **Make only the specified properties in `T` **required**, while keeping the rest unchanged (remain optional if optional).**
  * @template T - The object type to transform.
  * @template K - Keys of `T` that should become required.
+ * @template PrettifyOpts - Options controlling whether the resulting
+ * type should be normalized using the `Prettify` helper.
  * @example
  * ```ts
  * // Only "a" is required, "b" and "c" remain optional
@@ -39,16 +42,19 @@ type CleanOptional<T> = [T] extends [undefined] ? undefined : T;
  */
 export type RequiredOnly<
   T extends object,
-  K extends keyof T | AnyString
-> = IsNever<K> extends true
-  ? T
-  : PrettifyUnionIntersection<
-      {
-        [P in Exclude<keyof T, K>]?: CleanOptional<T[P]>; // optional
-      } & {
-        [P in Extract<keyof T, K>]-?: NonUndefined<CleanOptional<T[P]>>; // required
-      }
-    >;
+  K extends keyof T | AnyString,
+  PrettifyOpts extends PrettifyOptions = DefaultPrettifyOptions
+> =
+  IsNever<K> extends true
+    ? T
+    : PrettifyUnionIntersection<
+        {
+          [P in Exclude<keyof T, K>]?: CleanOptional<T[P]>; // optional
+        } & {
+          [P in Extract<keyof T, K>]-?: NonUndefined<CleanOptional<T[P]>>; // required
+        },
+        PrettifyOpts
+      >;
 
 /** -------------------------------------------------------
  * * ***Utility Type: `RequiredExcept`.***
@@ -56,6 +62,8 @@ export type RequiredOnly<
  * **Make **all properties** in `T` required, except the specified keys which remain optional.**
  * @template T - The object type to transform.
  * @template K - Keys of `T` that should remain optional.
+ * @template PrettifyOpts - Options controlling whether the resulting
+ * type should be normalized using the `Prettify` helper.
  * @example
  * ```ts
  * // All required except "a"
@@ -82,13 +90,16 @@ export type RequiredOnly<
  */
 export type RequiredExcept<
   T extends object,
-  K extends keyof T | AnyString
-> = IsNever<K> extends true
-  ? Required<T>
-  : PrettifyUnionIntersection<
-      {
-        [P in Exclude<keyof T, K>]-?: NonUndefined<CleanOptional<T[P]>>; // optional
-      } & {
-        [P in Extract<keyof T, K>]?: CleanOptional<T[P]>; // required
-      }
-    >;
+  K extends keyof T | AnyString,
+  PrettifyOpts extends PrettifyOptions = DefaultPrettifyOptions
+> =
+  IsNever<K> extends true
+    ? Required<T>
+    : PrettifyUnionIntersection<
+        {
+          [P in Exclude<keyof T, K>]-?: NonUndefined<CleanOptional<T[P]>>; // optional
+        } & {
+          [P in Extract<keyof T, K>]?: CleanOptional<T[P]>; // required
+        },
+        PrettifyOpts
+      >;

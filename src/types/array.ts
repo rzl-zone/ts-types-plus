@@ -60,22 +60,22 @@ export type MutableArray<T, Widen extends boolean = false> = T extends (
 ) => any
   ? T
   : T extends readonly any[]
-  ? { -readonly [K in keyof T]: MutableArray<T[K], Widen> }
-  : T extends object
-  ? { -readonly [K in keyof T]: MutableArray<T[K], Widen> }
-  : Widen extends true
-  ? T extends number
-    ? number
-    : T extends string
-    ? string
-    : T extends boolean
-    ? boolean
-    : T extends bigint
-    ? bigint
-    : T extends symbol
-    ? symbol
-    : T
-  : T;
+    ? { -readonly [K in keyof T]: MutableArray<T[K], Widen> }
+    : T extends object
+      ? { -readonly [K in keyof T]: MutableArray<T[K], Widen> }
+      : Widen extends true
+        ? T extends number
+          ? number
+          : T extends string
+            ? string
+            : T extends boolean
+              ? boolean
+              : T extends bigint
+                ? bigint
+                : T extends symbol
+                  ? symbol
+                  : T
+        : T;
 
 /** --------------------------------------------------
  * * ***Utility Type: `GetArrayElementType`.***
@@ -90,9 +90,8 @@ export type MutableArray<T, Widen extends boolean = false> = T extends (
  * // ➔ "admin" | "user"
  * ```
  */
-export type GetArrayElementType<T extends readonly any[]> = T extends readonly (infer U)[]
-  ? U
-  : never;
+export type GetArrayElementType<T extends readonly any[]> =
+  T extends readonly (infer U)[] ? U : never;
 
 /** -------------------------------------------------------
  * * ***Utility Type: `EmptyArray`.***

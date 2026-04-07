@@ -64,14 +64,15 @@ export type AnyString = {} & string;
  * // ➔ never (not trimmed)
  * ```
  */
-export type EmptyString<T extends string, WithTrim extends boolean = true> = "" extends (
-  WithTrim extends true ? Trim<T> : T
-)
+export type EmptyString<
+  T extends string,
+  WithTrim extends boolean = true
+> = "" extends (WithTrim extends true ? Trim<T> : T)
   ? string extends (WithTrim extends true ? Trim<T> : T)
     ? never
     : WithTrim extends true
-    ? Trim<T>
-    : T
+      ? Trim<T>
+      : T
   : never;
 
 /** -------------------------------------------------------
@@ -107,7 +108,11 @@ export type NonEmptyString<
   WithTrim extends boolean = true
 > = string extends T
   ? string
-  : If<IsNever<EmptyString<T, WithTrim>>, WithTrim extends true ? Trim<T> : T, never>;
+  : If<
+      IsNever<EmptyString<T, WithTrim>>,
+      WithTrim extends true ? Trim<T> : T,
+      never
+    >;
 
 /** -------------------------------------------------------
  * * ***Utility Type: `IsEmptyString`.***
@@ -133,9 +138,10 @@ export type NonEmptyString<
  * // ➔ false (not trimmed)
  * ```
  */
-export type IsEmptyString<T extends string, WithTrim extends boolean = true> = IfNot<
-  IsNever<EmptyString<T, WithTrim>>
->;
+export type IsEmptyString<
+  T extends string,
+  WithTrim extends boolean = true
+> = IfNot<IsNever<EmptyString<T, WithTrim>>>;
 
 /** -------------------------------------------------------
  * * ***Utility Type: `IsNonEmptyString`.***
@@ -161,9 +167,10 @@ export type IsEmptyString<T extends string, WithTrim extends boolean = true> = I
  * // ➔ true (not trimmed)
  * ```
  */
-export type IsNonEmptyString<T extends string, WithTrim extends boolean = true> = IfNot<
-  IsNever<NonEmptyString<T, WithTrim>>
->;
+export type IsNonEmptyString<
+  T extends string,
+  WithTrim extends boolean = true
+> = IfNot<IsNever<NonEmptyString<T, WithTrim>>>;
 
 /** -------------------------------------------------------
  * * ***Utility Type: `IfEmptyString`.***

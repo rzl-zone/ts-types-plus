@@ -23,7 +23,14 @@ import type { IsNever } from "./never";
  * // ➔ false
  * ```
  */
-export type Primitive = string | number | bigint | boolean | symbol | null | undefined;
+export type Primitive =
+  | string
+  | number
+  | bigint
+  | boolean
+  | symbol
+  | null
+  | undefined;
 
 /** -------------------------------------------------------
  * * ***Utility Type: `IsPrimitive`.***
@@ -55,11 +62,8 @@ export type Primitive = string | number | bigint | boolean | symbol | null | und
  * type L = IsPrimitive<() => void>; // ➔ false
  * ```
  */
-export type IsPrimitive<T> = IsNever<T> extends true
-  ? false
-  : T extends Primitive
-  ? true
-  : false;
+export type IsPrimitive<T> =
+  IsNever<T> extends true ? false : T extends Primitive ? true : false;
 
 /** -------------------------------------------------------
  * * ***Utility Type: `IsRealPrimitive`.***
@@ -92,4 +96,5 @@ export type IsPrimitive<T> = IsNever<T> extends true
  * type I = IsRealPrimitive<() => void>; // ➔ false
  * ```
  */
-export type IsRealPrimitive<T> = T extends Exclude<Primitive, null> ? true : false;
+export type IsRealPrimitive<T> =
+  T extends Exclude<Primitive, null> ? true : false;

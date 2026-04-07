@@ -7,9 +7,10 @@ type _Factorial<
   T extends number,
   CurrentNum extends number = 1,
   CurrentProduct extends number = 1
-> = IsEqual<T, CurrentNum> extends true
-  ? Multi<CurrentProduct, CurrentNum>
-  : _Factorial<T, Increment<CurrentNum>, Multi<CurrentProduct, CurrentNum>>;
+> =
+  IsEqual<T, CurrentNum> extends true
+    ? Multi<CurrentProduct, CurrentNum>
+    : _Factorial<T, Increment<CurrentNum>, Multi<CurrentProduct, CurrentNum>>;
 
 /** -------------------------------------------------------
  * * ***Utility Type: `Factorial`.***
@@ -34,7 +35,7 @@ type _Factorial<
 export type Factorial<T extends number> = number extends T
   ? never
   : IsNegative<T> extends true
-  ? never
-  : IsEqual<T, 0> extends true
-  ? 1
-  : _Factorial<T>;
+    ? never
+    : IsEqual<T, 0> extends true
+      ? 1
+      : _Factorial<T>;

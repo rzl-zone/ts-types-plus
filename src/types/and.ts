@@ -48,9 +48,7 @@ export type And<Condition1, Condition2> = IfExtends<
  * // ➔ false
  * ```
  */
-export type AndArr<Conditions extends readonly unknown[]> = Extends<
-  [],
-  Conditions
-> extends true
-  ? false
-  : Extends<Conditions[number], true>;
+export type AndArr<Conditions extends readonly unknown[]> =
+  Extends<[], Conditions> extends true
+    ? false
+    : Extends<Conditions[number], true>;

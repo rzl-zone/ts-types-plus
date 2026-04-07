@@ -4,7 +4,6 @@
 type Includes<
   S extends string,
   Sub extends string
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
 > = S extends `${infer _}${Sub}${infer _}` ? true : false;
 
 /** -------------------------------------------------------
@@ -47,14 +46,17 @@ export type ReplaceAll<
 > = Pivot extends "" | []
   ? T
   : Includes<ReplaceBy, Pivot extends string ? Pivot : never> extends true
-  ? string // guard: prevent infinite recursion
-  : Pivot extends readonly [infer First extends string, ...infer Rest extends string[]]
-  ? ReplaceAll<ReplaceAll<T, First, ReplaceBy>, Rest, ReplaceBy>
-  : Pivot extends string
-  ? T extends `${infer A}${Pivot}${infer B}`
-    ? ReplaceAll<`${A}${ReplaceBy}${B}`, Pivot, ReplaceBy>
-    : T
-  : T;
+    ? string // guard: prevent infinite recursion
+    : Pivot extends readonly [
+          infer First extends string,
+          ...infer Rest extends string[]
+        ]
+      ? ReplaceAll<ReplaceAll<T, First, ReplaceBy>, Rest, ReplaceBy>
+      : Pivot extends string
+        ? T extends `${infer A}${Pivot}${infer B}`
+          ? ReplaceAll<`${A}${ReplaceBy}${B}`, Pivot, ReplaceBy>
+          : T
+        : T;
 
 /** --------------------------------------------------
  * * ***ReplaceAllDeprecated.***

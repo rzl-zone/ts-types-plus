@@ -13,7 +13,9 @@ import type { AnyFunction } from "./functions";
  * // ➔ [number, string]
  * ```
  */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export type ArgumentTypes<F extends AnyFunction> = F extends (...args: infer A) => any
+export type ArgumentTypes<F extends AnyFunction> = F extends (
+  ...args: infer A
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+) => any
   ? A
   : never;

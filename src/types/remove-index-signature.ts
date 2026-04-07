@@ -17,6 +17,5 @@
  * ```
  */
 export type RemoveIndexSignature<T> = {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   [Key in keyof T as Key extends `${infer _}` ? Key : never]: T[Key];
 };

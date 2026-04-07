@@ -1,11 +1,12 @@
 import type { IsNever } from "./never";
 import type { Not } from "./not";
 
-type _IsUnion<T, U = T> = IsNever<T> extends true
-  ? false
-  : T extends U
-  ? Not<IsNever<Exclude<U, T>>>
-  : false;
+type _IsUnion<T, U = T> =
+  IsNever<T> extends true
+    ? false
+    : T extends U
+      ? Not<IsNever<Exclude<U, T>>>
+      : false;
 
 /** -------------------------------------------------------
  * * ***Utility Type: `IsUnion`.***

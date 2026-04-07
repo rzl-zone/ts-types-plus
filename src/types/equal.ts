@@ -20,11 +20,10 @@ import type { Not } from "./not";
  *  // ➔ true
  * ```
  */
-export type IsEqual<T, U> = (<F>() => F extends T ? 1 : 2) extends <F>() => F extends U
-  ? 1
-  : 2
-  ? true
-  : false;
+export type IsEqual<T, U> =
+  (<F>() => F extends T ? 1 : 2) extends <F>() => F extends U ? 1 : 2
+    ? true
+    : false;
 
 /** -------------------------------------------------------
  * * ***Utility Type: `IsNotEqual`.***

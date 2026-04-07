@@ -38,10 +38,10 @@ type _IsDivisibleByThree<T extends number> = DigitsTuple<
       ? true
       : false
     : SumArr<Digits> extends infer DigitsSum extends number
-    ? IfLowerThan<DigitsSum, 3> extends true
-      ? false
-      : _IsDivisibleByThree<DigitsSum>
-    : never
+      ? IfLowerThan<DigitsSum, 3> extends true
+        ? false
+        : _IsDivisibleByThree<DigitsSum>
+      : never
   : never;
 
 /** -------------------------------------------------------
@@ -74,7 +74,10 @@ export type IsDivisibleByThree<T extends number> = _IsDivisibleByThree<T>;
  * type Case3 = IsDivisibleByFive<13>;  // ➔ false
  * type Case4 = IsDivisibleByFive<-17>; // ➔ false
  */
-export type IsDivisibleByFive<T extends number> = EndsWith<Stringify<T>, "0" | "5">;
+export type IsDivisibleByFive<T extends number> = EndsWith<
+  Stringify<T>,
+  "0" | "5"
+>;
 
 /** -------------------------------------------------------
  * * ***Utility Type: `IsDivisibleBySix`.***
@@ -125,7 +128,10 @@ export type IsDivisibleByTen<T extends number> = EndsWith<Stringify<T>, "0">;
  * type Case3 = IsDivisibleByHundred<101>;  // ➔ false
  * type Case4 = IsDivisibleByHundred<-210>; // ➔ false
  */
-export type IsDivisibleByHundred<T extends number> = EndsWith<Stringify<T>, "00">;
+export type IsDivisibleByHundred<T extends number> = EndsWith<
+  Stringify<T>,
+  "00"
+>;
 
 /** -------------------------------------------------------
  * * ***Utility Type: `IsDivisible`.***
@@ -141,7 +147,7 @@ export type IsDivisibleByHundred<T extends number> = EndsWith<Stringify<T>, "00"
  * type Case3 = IsDivisible<1023, 2>; // ➔ false
  * type Case4 = IsDivisible<3034, 3>; // ➔ false
  */
-export type IsDivisible<Dividend extends number, Divisor extends number> = IsEqual<
-  Mod<Dividend, Divisor>,
-  0
->;
+export type IsDivisible<
+  Dividend extends number,
+  Divisor extends number
+> = IsEqual<Mod<Dividend, Divisor>, 0>;

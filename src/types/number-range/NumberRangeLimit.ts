@@ -15,28 +15,29 @@ type _NumberRangeLimit<
   From extends number,
   To extends number,
   Result extends number[] = [From]
-> = IsGreaterThan<From, To> extends true
-  ? [...Result, To][number] extends infer R extends number
-    ? R extends R
-      ? IsGreaterThan<R, To> extends true
-        ? never
-        : R
+> =
+  IsGreaterThan<From, To> extends true
+    ? [...Result, To][number] extends infer R extends number
+      ? R extends R
+        ? IsGreaterThan<R, To> extends true
+          ? never
+          : R
+        : never
       : never
-    : never
-  : _NumberRangeLimit<
-      Sum<From, 7>,
-      To,
-      [
-        ...Result,
-        From,
-        Sum<From, 1>,
-        Sum<From, 2>,
-        Sum<From, 3>,
-        Sum<From, 4>,
-        Sum<From, 5>,
-        Sum<From, 6>
-      ]
-    >;
+    : _NumberRangeLimit<
+        Sum<From, 7>,
+        To,
+        [
+          ...Result,
+          From,
+          Sum<From, 1>,
+          Sum<From, 2>,
+          Sum<From, 3>,
+          Sum<From, 4>,
+          Sum<From, 5>,
+          Sum<From, 6>
+        ]
+      >;
 
 /** --------------------------------------------------
  * * ***Utility Type: `NumberRangeLimit`.***
@@ -66,7 +67,7 @@ type _NumberRangeLimit<
  * // ➔ 10
  * ```
  */
-export type NumberRangeLimit<From extends number, To extends number> = _NumberRangeLimit<
-  From,
-  To
->;
+export type NumberRangeLimit<
+  From extends number,
+  To extends number
+> = _NumberRangeLimit<From, To>;

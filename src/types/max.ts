@@ -33,14 +33,15 @@ export type Max<Num1 extends number, Num2 extends number> = IfLowerThan<
 type _MaxArr<
   T extends readonly number[],
   CurrentMax extends number = ReturnItselfIfNotExtends<T[0], undefined, never>
-> = IsEmptyArray<T> extends true
-  ? CurrentMax
-  : Shift<T, { includeRemoved: true }> extends [
-      infer Rest extends number[],
-      infer First extends number
-    ]
-  ? _MaxArr<Rest, Max<First, CurrentMax>>
-  : never;
+> =
+  IsEmptyArray<T> extends true
+    ? CurrentMax
+    : Shift<T, { includeRemoved: true }> extends [
+          infer Rest extends number[],
+          infer First extends number
+        ]
+      ? _MaxArr<Rest, Max<First, CurrentMax>>
+      : never;
 
 /** -------------------------------------------------------
  * * ***Utility Type: `MaxArr`.***
@@ -56,6 +57,5 @@ type _MaxArr<
  * type Case3 = MaxArr<number[]>;      // ➔ never (not a tuple)
  * ```
  */
-export type MaxArr<T extends readonly number[]> = IsTuple<T> extends true
-  ? _MaxArr<T>
-  : never;
+export type MaxArr<T extends readonly number[]> =
+  IsTuple<T> extends true ? _MaxArr<T> : never;

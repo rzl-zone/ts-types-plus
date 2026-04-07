@@ -1,15 +1,16 @@
-import { IsEqual } from "./equal";
-import { Multi } from "./multi";
-import { Push } from "./push";
+import { type IsEqual } from "./equal";
+import { type Multi } from "./multi";
+import { type Push } from "./push";
 
 type _Pow<
   Num extends number,
   Factor extends number,
   CurrentProduct extends number = 1,
   Iteration extends unknown[] = []
-> = IsEqual<Iteration["length"], Factor> extends true
-  ? CurrentProduct
-  : _Pow<Num, Factor, Multi<CurrentProduct, Num>, Push<Iteration, unknown>>;
+> =
+  IsEqual<Iteration["length"], Factor> extends true
+    ? CurrentProduct
+    : _Pow<Num, Factor, Multi<CurrentProduct, Num>, Push<Iteration, unknown>>;
 
 /** -------------------------------------------------------
  * * ***Utility Type: `Pow`.***

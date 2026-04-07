@@ -19,10 +19,10 @@ type _LastCharacter<
 > = string extends T
   ? string
   : T extends `${infer First}${infer Rest}`
-  ? IsEmptyString<Rest> extends true
-    ? If<Options["includeRest"], [First, Previous], First>
-    : _LastCharacter<Rest, Options, `${Previous}${First}`>
-  : T;
+    ? IsEmptyString<Rest> extends true
+      ? If<Options["includeRest"], [First, Previous], First>
+      : _LastCharacter<Rest, Options, `${Previous}${First}`>
+    : T;
 
 /** -------------------------------------------------------
  * * ***Utility Type: `LastCharacter`.***

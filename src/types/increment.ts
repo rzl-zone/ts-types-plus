@@ -30,20 +30,18 @@ type LastDigitMap = {
  * type R2 = Increment<"23">; // ➔ 24
  * ```
  */
-export type _Increment<
-  Number extends string,
-  Result extends string = ""
-> = IsEmptyString<Number> extends true
-  ? ParseNumber<`1${Result}`>
-  : LastCharacter<Number> extends `${infer LastDigit extends number}`
-  ? IncrementMap[LastDigit] extends infer Incremented extends number
-    ? Number extends `${infer Rest}${LastDigit}`
-      ? Incremented extends keyof LastDigitMap
-        ? _Increment<Rest, `${LastDigitMap[Incremented]}${Result}`>
-        : ParseNumber<`${Rest}${Incremented}${Result}`>
-      : never
-    : never
-  : never;
+export type _Increment<Number extends string, Result extends string = ""> =
+  IsEmptyString<Number> extends true
+    ? ParseNumber<`1${Result}`>
+    : LastCharacter<Number> extends `${infer LastDigit extends number}`
+      ? IncrementMap[LastDigit] extends infer Incremented extends number
+        ? Number extends `${infer Rest}${LastDigit}`
+          ? Incremented extends keyof LastDigitMap
+            ? _Increment<Rest, `${LastDigitMap[Incremented]}${Result}`>
+            : ParseNumber<`${Rest}${Incremented}${Result}`>
+          : never
+        : never
+      : never;
 
 /** -------------------------------------------------------
  * * ***Utility Type: `Increment`.***
@@ -57,10 +55,13 @@ export type _Increment<
  * type Case2 = Increment<-10>; // ➔ -9
  * ```
  */
-export type Increment<T extends number> = IsNegative<T> extends true
-  ? _Decrement<Stringify<Abs<T>>> extends infer NegativeIncrementResult extends number
-    ? NegativeIncrementResult extends 0
-      ? NegativeIncrementResult
-      : Negate<NegativeIncrementResult>
-    : never
-  : _Increment<Stringify<T>>;
+export type Increment<T extends number> =
+  IsNegative<T> extends true
+    ? _Decrement<
+        Stringify<Abs<T>>
+      > extends infer NegativeIncrementResult extends number
+      ? NegativeIncrementResult extends 0
+        ? NegativeIncrementResult
+        : Negate<NegativeIncrementResult>
+      : never
+    : _Increment<Stringify<T>>;

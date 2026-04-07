@@ -16,10 +16,11 @@ import type { IsFloat, IsNegative, Negate } from "./number";
  * type D = Floor<-5>;   // ➔ -5
  * ```
  */
-export type Floor<T extends number> = IsFloat<T> extends true
-  ? GetFloatNumberParts<T> extends [infer Whole extends number, unknown]
-    ? IsNegative<T> extends true
-      ? Negate<Increment<Whole>>
-      : Whole
-    : never
-  : T;
+export type Floor<T extends number> =
+  IsFloat<T> extends true
+    ? GetFloatNumberParts<T> extends [infer Whole extends number, unknown]
+      ? IsNegative<T> extends true
+        ? Negate<Increment<Whole>>
+        : Whole
+      : never
+    : T;

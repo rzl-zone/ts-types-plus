@@ -17,10 +17,10 @@ import type { IfLowerThan, IsLowerThan } from "./lower-than";
  * type B = IsGreaterThan<-10, 1>;  // ➔ false
  * ```
  */
-export type IsGreaterThan<Num1 extends number, Num2 extends number> = IsLowerThan<
-  Num2,
-  Num1
->;
+export type IsGreaterThan<
+  Num1 extends number,
+  Num2 extends number
+> = IsLowerThan<Num2, Num1>;
 
 /** -------------------------------------------------------
  * * ***Utility Type: `IfGreaterThan`.***
@@ -66,12 +66,8 @@ export type IfGreaterThan<
  * type C = IsGreaterOrEqual<10, 10>; // ➔ true
  * ```
  */
-export type IsGreaterOrEqual<Num1 extends number, Num2 extends number> = IsEqual<
-  Num1,
-  Num2
-> extends true
-  ? true
-  : IsGreaterThan<Num1, Num2>;
+export type IsGreaterOrEqual<Num1 extends number, Num2 extends number> =
+  IsEqual<Num1, Num2> extends true ? true : IsGreaterThan<Num1, Num2>;
 
 /** -------------------------------------------------------
  * * ***Utility Type: `IfGreaterOrEqual`.***

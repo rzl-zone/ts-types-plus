@@ -42,7 +42,13 @@
  * // ➔ never
  * ```
  */
-export type Stringify<T> = T extends number | boolean | string | bigint | undefined | null
+export type Stringify<T> = T extends
+  | number
+  | boolean
+  | string
+  | bigint
+  | undefined
+  | null
   ? T extends bigint
     ? `${T}n`
     : `${T}`

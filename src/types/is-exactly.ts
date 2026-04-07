@@ -19,12 +19,13 @@ import type { IsAny } from "./any";
  * type E = IsExactly<any, any>;       // ➔ false
  * ```
  */
-export type IsExactly<A, B> = IsAny<A> extends true
-  ? false
-  : IsAny<B> extends true
-  ? false
-  : (<T>() => T extends A ? 1 : 2) extends <T>() => T extends B ? 1 : 2
-  ? (<T>() => T extends B ? 1 : 2) extends <T>() => T extends A ? 1 : 2
-    ? true
-    : false
-  : false;
+export type IsExactly<A, B> =
+  IsAny<A> extends true
+    ? false
+    : IsAny<B> extends true
+      ? false
+      : (<T>() => T extends A ? 1 : 2) extends <T>() => T extends B ? 1 : 2
+        ? (<T>() => T extends B ? 1 : 2) extends <T>() => T extends A ? 1 : 2
+          ? true
+          : false
+        : false;

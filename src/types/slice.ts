@@ -72,36 +72,42 @@ export type Slice<
   IsEmptyArray<T> extends true
     ? "self"
     : IsGreaterOrEqual<Start, T["length"]> extends true
-    ? "empty"
-    : IsNegative<End> extends true
-    ? IsGreaterOrEqual<Abs<End>, T["length"]> extends true
       ? "empty"
-      : [IfPositive<Start, Start, Sum<T["length"], Start>>, Sum<T["length"], End>]
-    : And<
-        Or<IsEqual<Start, 0>, IsGreaterOrEqual<Abs<Start>, T["length"]>>,
-        IsGreaterOrEqual<End, T["length"]>
-      > extends true
-    ? "self"
-    : [IfPositive<Start, Start, Sum<T["length"], Start>>, End]
+      : IsNegative<End> extends true
+        ? IsGreaterOrEqual<Abs<End>, T["length"]> extends true
+          ? "empty"
+          : [
+              IfPositive<Start, Start, Sum<T["length"], Start>>,
+              Sum<T["length"], End>
+            ]
+        : And<
+              Or<IsEqual<Start, 0>, IsGreaterOrEqual<Abs<Start>, T["length"]>>,
+              IsGreaterOrEqual<End, T["length"]>
+            > extends true
+          ? "self"
+          : [IfPositive<Start, Start, Sum<T["length"], Start>>, End]
 ) extends infer Indexes
   ? Indexes extends "self"
     ? T
     : Indexes extends "empty"
-    ? []
-    : Indexes extends [infer NewStart extends number, infer NewEnd extends number]
-    ? IfGreaterOrEqual<NewStart, NewEnd> extends true
       ? []
-      : FilterRemoved<{
-          [K in keyof T]: IsArrayIndex<K> extends true
-            ? If<
-                And<
-                  IsGreaterOrEqual<ParseNumber<K>, NewStart>,
-                  IsLowerThan<ParseNumber<K>, NewEnd>
-                >,
-                T[K],
-                SliceRemovedItemValue
-              >
-            : T[K];
-        }>
-    : T
+      : Indexes extends [
+            infer NewStart extends number,
+            infer NewEnd extends number
+          ]
+        ? IfGreaterOrEqual<NewStart, NewEnd> extends true
+          ? []
+          : FilterRemoved<{
+              [K in keyof T]: IsArrayIndex<K> extends true
+                ? If<
+                    And<
+                      IsGreaterOrEqual<ParseNumber<K>, NewStart>,
+                      IsLowerThan<ParseNumber<K>, NewEnd>
+                    >,
+                    T[K],
+                    SliceRemovedItemValue
+                  >
+                : T[K];
+            }>
+        : T
   : T;

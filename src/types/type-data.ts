@@ -62,8 +62,8 @@ export type DataTypes =
 export type DeepReplaceType<Arr, Target, NewType> = Arr extends Target
   ? NewType
   : Arr extends object
-  ? { [K in keyof Arr]: DeepReplaceType<Arr[K], Target, NewType> }
-  : Arr;
+    ? { [K in keyof Arr]: DeepReplaceType<Arr[K], Target, NewType> }
+    : Arr;
 
 /** --------------------------------------------------
  * * ***Utility Type: `TypedArray`.***
@@ -150,17 +150,23 @@ export type WebApiObjects =
  *    - `Intl.NumberFormat`.
  *    - `Intl.RelativeTimeFormat`.
  *    - `Intl.PluralRules`.
- *    - `Intl.ListFormat`.
- *    - `Intl.Locale`.
+ *    - `Intl.ListFormat`. (if environment is supported).
+ *    - `Intl.Locale`. (if environment is supported).
  */
-export type IntlObjects =
-  | Intl.Collator
-  | Intl.DateTimeFormat
-  | Intl.NumberFormat
-  | Intl.RelativeTimeFormat
-  | Intl.PluralRules
-  | Intl.ListFormat
-  | Intl.Locale;
+export type IntlObjects = {
+  [K in keyof typeof Intl]: (typeof Intl)[K] extends abstract new (
+    ...args: any[]
+  ) => infer R
+    ? R
+    : never;
+}[keyof typeof Intl];
+// | Intl.Collator
+// | Intl.DateTimeFormat
+// | Intl.NumberFormat
+// | Intl.RelativeTimeFormat
+// | Intl.PluralRules
+// | If<IsAny<Intl.ListFormat>, never, Intl.ListFormat>
+// | If<IsAny<Intl.Locale>, never, Intl.Locale>;
 
 /** --------------------------------------------------
  * * ***Utility Type: `BoxedPrimitivesTypes`.***

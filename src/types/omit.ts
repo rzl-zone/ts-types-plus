@@ -1,4 +1,4 @@
-import type { Prettify } from "./prettify";
+import type { DefaultPrettifyOptions, Prettify, PrettifyOptions } from "./prettify";
 
 /** --------------------------------------------------
  * * ***Utility Type: `OmitStrict`.***
@@ -9,31 +9,23 @@ import type { Prettify } from "./prettify";
  *    - ✅ Optionally flattens nested intersections or mapped types into a cleaner shape.
  * @template T - The original object type.
  * @template K - The keys to omit from `T`.
- * @template WithPrettify - Whether to prettify the result (default is `true`).
- * @template WithPrettifyRecursive - Whether to prettify nested object properties recursively (default is `true`).
+ * @template PrettifyOpts - Options controlling whether the resulting
+ * type should be normalized using the `Prettify` helper.
  * @example
  * ```ts
  * type A = { a: number; b: string; c: boolean };
  * type B = OmitStrict<A, 'b'>;
  * // ➔ { a: number; c: boolean }
  *
- * type C = OmitStrict<A, 'b', false>;
+ * type C = OmitStrict<A, 'b', { skipPrettify: true }>;
  * // ➔ Omit without prettifying, keeps intersection structure
  *
- * type D = OmitStrict<A, 'b', true, false>;
+ * type D = OmitStrict<A, 'b', true, { recursive: false }>;
  * // ➔ Prettifies only top level, does not recurse into nested objects
  * ```
  */
 export type OmitStrict<
   T,
   K extends keyof T,
-  WithPrettify extends boolean = true,
-  WithPrettifyRecursive extends boolean = true
-> = WithPrettify extends true
-  ? Prettify<
-      Omit<T, K>,
-      { recursive: WithPrettifyRecursive extends boolean ? WithPrettifyRecursive : false }
-    >
-  : WithPrettify extends false
-  ? Omit<T, K>
-  : never;
+  PrettifyOpts extends PrettifyOptions = DefaultPrettifyOptions
+> = Prettify<Omit<T, K>, PrettifyOpts>;

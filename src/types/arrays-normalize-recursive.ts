@@ -26,10 +26,10 @@ export type FixNeverArrayRecursive<T> = T extends readonly never[]
     ? []
     : readonly []
   : T extends (infer U)[]
-  ? FixNeverArrayRecursive<U>[]
-  : T extends readonly (infer U)[]
-  ? readonly FixNeverArrayRecursive<U>[]
-  : T;
+    ? FixNeverArrayRecursive<U>[]
+    : T extends readonly (infer U)[]
+      ? readonly FixNeverArrayRecursive<U>[]
+      : T;
 
 /** -------------------------------------------------------
  * * ***Utility Type: `NormalizeEmptyArraysRecursive`.***
@@ -57,15 +57,13 @@ export type FixNeverArrayRecursive<T> = T extends readonly never[]
 export type NormalizeEmptyArraysRecursive<T> = T extends readonly (infer U)[]
   ? U extends never | null | undefined
     ? T extends readonly unknown[]
-      ? // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        T extends (infer E)[]
+      ? T extends (infer _E)[]
         ? []
         : readonly []
       : never
-    : // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    T extends (infer E)[]
-    ? NormalizeEmptyArraysRecursive<U>[]
-    : readonly NormalizeEmptyArraysRecursive<U>[]
+    : T extends (infer _E)[]
+      ? NormalizeEmptyArraysRecursive<U>[]
+      : readonly NormalizeEmptyArraysRecursive<U>[]
   : T;
 
 /** -------------------------------------------------------
@@ -96,5 +94,5 @@ export type RemoveEmptyArrayElements<T> = T extends [infer Head, ...infer Tail]
     ? RemoveEmptyArrayElements<Tail>
     : [Head, ...RemoveEmptyArrayElements<Tail>]
   : T extends []
-  ? []
-  : T;
+    ? []
+    : T;

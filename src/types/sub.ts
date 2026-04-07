@@ -66,33 +66,42 @@ type _Sub<
   Num2 extends string,
   NegativeCarry extends 0 | 1 = 0,
   Result extends string = ""
-> = IsEmptyString<Num2> extends true
-  ? NegativeCarry extends 0
-    ? `${Num1}${Result}`
-    : `${Decrement<ParseNumber<Num1>>}${Result}`
-  : LastCharacter<Num1> extends `${infer Num1LastDigit extends keyof SubMap & number}`
-  ? LastCharacter<Num2> extends `${infer Num2LastDigit extends keyof SubMap[Num1LastDigit] &
-      number}`
-    ? `${SubMap[Num1LastDigit][Num2LastDigit]}` extends infer DigitsSub extends keyof SubDecrementMap
-      ? (
-          NegativeCarry extends 1 ? Stringify<SubDecrementMap[DigitsSub]> : DigitsSub
-        ) extends infer DigitsSubWithCarry extends string
-        ? Num1 extends `${infer Num1Rest}${Num1LastDigit}`
-          ? Num2 extends `${infer Num2Rest}${Num2LastDigit}`
-            ? DigitsSubWithCarry extends keyof SubNegativeCarryMap
-              ? _Sub<
-                  Num1Rest,
-                  Num2Rest,
-                  1,
-                  `${SubNegativeCarryMap[DigitsSubWithCarry]}${Result}`
-                >
-              : _Sub<Num1Rest, Num2Rest, 0, `${DigitsSubWithCarry}${Result}`>
+> =
+  IsEmptyString<Num2> extends true
+    ? NegativeCarry extends 0
+      ? `${Num1}${Result}`
+      : `${Decrement<ParseNumber<Num1>>}${Result}`
+    : LastCharacter<Num1> extends `${infer Num1LastDigit extends keyof SubMap & number}`
+      ? LastCharacter<Num2> extends `${infer Num2LastDigit extends
+          keyof SubMap[Num1LastDigit] & number}`
+        ? `${SubMap[Num1LastDigit][Num2LastDigit]}` extends infer DigitsSub extends
+            keyof SubDecrementMap
+          ? (
+              NegativeCarry extends 1
+                ? Stringify<SubDecrementMap[DigitsSub]>
+                : DigitsSub
+            ) extends infer DigitsSubWithCarry extends string
+            ? Num1 extends `${infer Num1Rest}${Num1LastDigit}`
+              ? Num2 extends `${infer Num2Rest}${Num2LastDigit}`
+                ? DigitsSubWithCarry extends keyof SubNegativeCarryMap
+                  ? _Sub<
+                      Num1Rest,
+                      Num2Rest,
+                      1,
+                      `${SubNegativeCarryMap[DigitsSubWithCarry]}${Result}`
+                    >
+                  : _Sub<
+                      Num1Rest,
+                      Num2Rest,
+                      0,
+                      `${DigitsSubWithCarry}${Result}`
+                    >
+                : never
+              : never
             : never
           : never
         : never
-      : never
-    : never
-  : never;
+      : never;
 
 /** -------------------------------------------------------
  * * ***Utility Type: `Sub`.***
@@ -123,19 +132,21 @@ type _Sub<
  * type Case6 = Sub<-2, -5>; // ➔ 3
  * ```
  */
-export type Sub<
-  Num1 extends number,
-  Num2 extends number
-> = IsNegativeInteger<Num1> extends true
-  ? IsNegativeInteger<Num2> extends true
-    ? IsLowerThan<Num1, Num2> extends true
-      ? Negate<_RemoveLeadingZeros<_Sub<Stringify<Abs<Num1>>, Stringify<Abs<Num2>>>>>
-      : _RemoveLeadingZeros<_Sub<Stringify<Abs<Num2>>, Stringify<Abs<Num1>>>>
-    : Sum<Abs<Num1>, Num2> extends infer Result extends number
-    ? Negate<Result>
-    : never
-  : IsNegativeInteger<Num2> extends true
-  ? Sum<Num1, Abs<Num2>>
-  : IsLowerThan<Num1, Num2> extends true
-  ? Negate<_RemoveLeadingZeros<_Sub<Stringify<Num2>, Stringify<Num1>>>>
-  : _RemoveLeadingZeros<_Sub<Stringify<Num1>, Stringify<Num2>>>;
+export type Sub<Num1 extends number, Num2 extends number> =
+  IsNegativeInteger<Num1> extends true
+    ? IsNegativeInteger<Num2> extends true
+      ? IsLowerThan<Num1, Num2> extends true
+        ? Negate<
+            _RemoveLeadingZeros<
+              _Sub<Stringify<Abs<Num1>>, Stringify<Abs<Num2>>>
+            >
+          >
+        : _RemoveLeadingZeros<_Sub<Stringify<Abs<Num2>>, Stringify<Abs<Num1>>>>
+      : Sum<Abs<Num1>, Num2> extends infer Result extends number
+        ? Negate<Result>
+        : never
+    : IsNegativeInteger<Num2> extends true
+      ? Sum<Num1, Abs<Num2>>
+      : IsLowerThan<Num1, Num2> extends true
+        ? Negate<_RemoveLeadingZeros<_Sub<Stringify<Num2>, Stringify<Num1>>>>
+        : _RemoveLeadingZeros<_Sub<Stringify<Num1>, Stringify<Num2>>>;

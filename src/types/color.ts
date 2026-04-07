@@ -8,9 +8,8 @@ import type { IsInteger } from "./number";
 import type { Split } from "./split";
 import type { StringLength } from "./string-length";
 
-type _IsValidRGBParameter<T extends number> = IsInteger<T> extends true
-  ? IsBetween<T, 0, 255>
-  : false;
+type _IsValidRGBParameter<T extends number> =
+  IsInteger<T> extends true ? IsBetween<T, 0, 255> : false;
 
 /** * ***Configuration options for a type-level utility
  * {@link RGB | `RGB`} | {@link IsRGB | `IsRGB` } | {@link IfRGB | `IfRGB` }.*** */
@@ -67,7 +66,11 @@ export type RGB<
   Options extends RGBOptions = DefaultRGBOptions
 > = T extends `rgb(${infer R extends number}${Options["separator"]}${infer G extends number}${Options["separator"]}${infer B extends number})`
   ? AndArr<
-      [_IsValidRGBParameter<R>, _IsValidRGBParameter<G>, _IsValidRGBParameter<B>]
+      [
+        _IsValidRGBParameter<R>,
+        _IsValidRGBParameter<G>,
+        _IsValidRGBParameter<B>
+      ]
     > extends true
     ? T
     : never
@@ -90,9 +93,10 @@ export type RGB<
  * // ➔ true
  * ```
  */
-export type IsRGB<T extends string, Options extends RGBOptions = DefaultRGBOptions> = Not<
-  IsNever<RGB<T, Options>>
->;
+export type IsRGB<
+  T extends string,
+  Options extends RGBOptions = DefaultRGBOptions
+> = Not<IsNever<RGB<T, Options>>>;
 
 /** -------------------------------------------------------
  * * ***Utility Type: `IfRGB`.***
@@ -262,7 +266,10 @@ export type DefaultHSLOptions = {
  * // ➔ "hsl(100,34%,56%)"
  * ```
  */
-export type HSL<T extends string, Options extends HSLOptions = DefaultHSLOptions> = (
+export type HSL<
+  T extends string,
+  Options extends HSLOptions = DefaultHSLOptions
+> = (
   T extends `hsl(${infer H extends number}${Options["separator"]}${infer S extends number}%${Options["separator"]}${infer L extends number}%)`
     ? AndArr<[IsInteger<H>, IsInteger<S>, IsInteger<L>]> extends true
       ? AndArr<[IsBetween<S, 0, 100>, IsBetween<L, 0, 100>]>
@@ -289,9 +296,10 @@ export type HSL<T extends string, Options extends HSLOptions = DefaultHSLOptions
  * // ➔ true
  * ```
  */
-export type IsHSL<T extends string, Options extends HSLOptions = DefaultHSLOptions> = Not<
-  IsNever<HSL<T, Options>>
->;
+export type IsHSL<
+  T extends string,
+  Options extends HSLOptions = DefaultHSLOptions
+> = Not<IsNever<HSL<T, Options>>>;
 
 /** -------------------------------------------------------
  * * ***Utility Type: `IfHSL`.***
@@ -396,13 +404,11 @@ export type DefaultColorOptions = {
   hslOptions: DefaultHSLOptions;
 };
 
-type ResolveRGBOptions<O extends ColorOptions> = O["rgbOptions"] extends RGBOptions
-  ? O["rgbOptions"]
-  : DefaultRGBOptions;
+type ResolveRGBOptions<O extends ColorOptions> =
+  O["rgbOptions"] extends RGBOptions ? O["rgbOptions"] : DefaultRGBOptions;
 
-type ResolveHSLOptions<O extends ColorOptions> = O["hslOptions"] extends HSLOptions
-  ? O["hslOptions"]
-  : DefaultHSLOptions;
+type ResolveHSLOptions<O extends ColorOptions> =
+  O["hslOptions"] extends HSLOptions ? O["hslOptions"] : DefaultHSLOptions;
 
 /** -------------------------------------------------------
  * * ***Utility Type: `Color`.***
@@ -426,7 +432,10 @@ type ResolveHSLOptions<O extends ColorOptions> = O["hslOptions"] extends HSLOpti
  * // ➔ "hsl(100,34%,56%)"
  * ```
  */
-export type Color<T extends string, Options extends ColorOptions = DefaultColorOptions> =
+export type Color<
+  T extends string,
+  Options extends ColorOptions = DefaultColorOptions
+> =
   | HEX<T>
   | HSL<T, ResolveHSLOptions<Options>>
   | RGB<T, ResolveRGBOptions<Options>>;

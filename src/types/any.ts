@@ -38,7 +38,11 @@ export type IsAny<T> = 0 extends 1 & T ? true : false;
  * // ➔ number
  * ```
  */
-export type IfAny<T, IfTrue = true, IfFalse = false> = If<IsAny<T>, IfTrue, IfFalse>;
+export type IfAny<T, IfTrue = true, IfFalse = false> = If<
+  IsAny<T>,
+  IfTrue,
+  IfFalse
+>;
 
 /** * ***Configuration options for a type-level utility for
  * {@link AnifyProperties | `AnifyProperties`}.***
@@ -77,3 +81,35 @@ export type AnifyProperties<
 } extends infer Result
   ? If<Options["makeOptional"], Partial<Result>, Result>
   : never;
+
+/** -------------------------------------------------------
+ * * ***Utility Type: `NonAny`.***
+ * -------------------------------------------------------
+ * **Removes the `any` type by converting it to `never`.**
+ *
+ * This utility detects whether a type `T` resolves to `any`.
+ * If so, it returns `never`; otherwise it preserves `T`.
+ *
+ * This is useful when building unions or mapped types where
+ * the presence of `any` would otherwise pollute the entire
+ * result type.
+ *
+ * Internally it uses the `0 extends (1 & T)` trick which only
+ * evaluates to `true` when `T` is `any`.
+ *
+ * @template T - Type to check and filter.
+ *
+ * @example
+ * ```ts
+ * type A = NonAny<string>; // ➔ string
+ * type B = NonAny<number>; // ➔ number
+ * type C = NonAny<any>;    // ➔ never
+ * ```
+ *
+ * @example
+ * ```ts
+ * type A = string | NonAny<any>;
+ * // ➔ string
+ * ```
+ */
+export type NonAny<T> = 0 extends 1 & T ? never : T;

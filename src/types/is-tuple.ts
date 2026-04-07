@@ -10,7 +10,10 @@ import type { If } from "./if";
  * type Case1 = IsTuple<[1, 2, 3]>; // ➔ true
  * type Case2 = IsTuple<number[]>;  // ➔ false
  */
-export type IsTuple<T extends readonly unknown[]> = NotExtends<number, T["length"]>;
+export type IsTuple<T extends readonly unknown[]> = NotExtends<
+  number,
+  T["length"]
+>;
 
 /** -------------------------------------------------------
  * * ***Utility Type: `IfTuple`.***
@@ -27,8 +30,8 @@ export type IsTuple<T extends readonly unknown[]> = NotExtends<number, T["length
  * type Case2 = IfTuple<number[], 'valid', 'invalid'>;
  * // ➔ 'invalid'
  */
-export type IfTuple<T extends readonly unknown[], IfTrue = true, IfFalse = false> = If<
-  IsTuple<T>,
-  IfTrue,
-  IfFalse
->;
+export type IfTuple<
+  T extends readonly unknown[],
+  IfTrue = true,
+  IfFalse = false
+> = If<IsTuple<T>, IfTrue, IfFalse>;

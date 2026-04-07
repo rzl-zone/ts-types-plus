@@ -3,17 +3,18 @@ import type { Stringify } from "./stringify";
 import type { IsStringLiteral } from "./is-string-literal";
 import type { Not } from "./not";
 
-type _IsPalindrome<T extends string> = IsEmptyString<T> extends true
-  ? true
-  : Not<IsStringLiteral<T>> extends true
-  ? false
-  : T extends `${infer First extends string}${infer Rest extends string}`
-  ? IsEmptyString<Rest> extends true
+type _IsPalindrome<T extends string> =
+  IsEmptyString<T> extends true
     ? true
-    : Rest extends `${infer NewRest extends string}${First}`
-    ? _IsPalindrome<NewRest>
-    : false
-  : false;
+    : Not<IsStringLiteral<T>> extends true
+      ? false
+      : T extends `${infer First extends string}${infer Rest extends string}`
+        ? IsEmptyString<Rest> extends true
+          ? true
+          : Rest extends `${infer NewRest extends string}${First}`
+            ? _IsPalindrome<NewRest>
+            : false
+        : false;
 
 /** -------------------------------------------------------
  * * ***Utility Type: `IsPalindrome`.***
@@ -35,4 +36,6 @@ type _IsPalindrome<T extends string> = IsEmptyString<T> extends true
  *   and {@link Not | **`Not`**} for type-level logic.
  * - Returns `true` if the input is a palindrome, otherwise `false`.
  */
-export type IsPalindrome<T extends string | number> = _IsPalindrome<Stringify<T>>;
+export type IsPalindrome<T extends string | number> = _IsPalindrome<
+  Stringify<T>
+>;

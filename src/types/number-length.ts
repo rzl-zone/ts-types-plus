@@ -62,7 +62,7 @@ type MergeOptions<Opts extends TypeNumberLengthOptions> = {
  * - `stripDot` ➔ Removes the decimal point `.` (default `true`).
  * - `stripBigInt` ➔ Removes trailing `n` (default `true`).
  * @example
- * #### ✅ _Valid Examples:_
+ * **✅ Valid Examples:**
  * ```ts
  * // Integers
  * type A = NumberLength<100>;  // ➔ 3
@@ -90,7 +90,7 @@ type MergeOptions<Opts extends TypeNumberLengthOptions> = {
  * // ➔ 5 (minus & n kept ➔ -123n)
  * ```
  * ---
- * #### ❌ _Invalid Examples:_
+ * **❌ Invalid Examples:**
  * ```ts
  * type Invalid1 = NumberLength<string>;   // ➔ never
  * type Invalid2 = NumberLength<boolean>;  // ➔ never
@@ -111,21 +111,22 @@ type MergeOptions<Opts extends TypeNumberLengthOptions> = {
 export type NumberLength<
   T extends number | bigint,
   Options extends Partial<TypeNumberLengthOptions> = DefaultNumberLengthOptions
-> = If<
-  OrArr<[IsBaseType<T>, Extends<T, string>, Not<Extends<T, number | bigint>>]>
-> extends true
-  ? never
-  : StringLength<
-      ReplaceAll<
-        Stringify<T>,
-        [
-          MergeOptions<Options>["stripSign"] extends true ? "-" : "",
-          MergeOptions<Options>["stripDot"] extends true ? "." : "",
-          MergeOptions<Options>["stripBigInt"] extends true ? "n" : ""
-        ],
-        ""
-      >
-    >;
+> =
+  If<
+    OrArr<[IsBaseType<T>, Extends<T, string>, Not<Extends<T, number | bigint>>]>
+  > extends true
+    ? never
+    : StringLength<
+        ReplaceAll<
+          Stringify<T>,
+          [
+            MergeOptions<Options>["stripSign"] extends true ? "-" : "",
+            MergeOptions<Options>["stripDot"] extends true ? "." : "",
+            MergeOptions<Options>["stripBigInt"] extends true ? "n" : ""
+          ],
+          ""
+        >
+      >;
 
 /** -------------------------------------------------------
  * * ***Utility Type: `CompareNumberLength`.***
@@ -178,15 +179,16 @@ export type CompareNumberLength<
   IfNum1Shorter = never,
   IfNum2Shorter = never,
   IfEqual = never
-> = If<Or<Extends<number, Num1>, Extends<number, Num2>>> extends true
-  ? never
-  : CompareStringLength<
-      Stringify<Num1>,
-      Stringify<Num2>,
-      IfNum1Shorter,
-      IfNum2Shorter,
-      IfEqual
-    >;
+> =
+  If<Or<Extends<number, Num1>, Extends<number, Num2>>> extends true
+    ? never
+    : CompareStringLength<
+        Stringify<Num1>,
+        Stringify<Num2>,
+        IfNum1Shorter,
+        IfNum2Shorter,
+        IfEqual
+      >;
 
 /** -------------------------------------------------------
  * * ***Utility Type: `IsShorterNumber`.***

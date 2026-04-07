@@ -35,30 +35,30 @@ export type _Decrement<
 > = Number extends ""
   ? ParseNumber<Result>
   : ParseNumber<LastCharacter<Number>> extends infer LastDigit extends number
-  ? DecrementMap[LastDigit] extends infer Decremented extends number
-    ? Number extends `${infer Rest}${LastDigit}`
-      ? `${Decremented}` extends keyof NegativeCarryMap
-        ? _Decrement<Rest, `${NegativeCarryMap[`${Decremented}`]}${Result}`>
-        : `${Rest}${Decremented}${Result}` extends infer FinalResult extends string
-        ? ParseNumber<
-            FinalResult extends `0${infer FinalResultWithoutLeadingZero extends string}`
-              ? FinalResultWithoutLeadingZero extends ""
-                ? FinalResult
-                : FinalResultWithoutLeadingZero
-              : FinalResult
-          >
+    ? DecrementMap[LastDigit] extends infer Decremented extends number
+      ? Number extends `${infer Rest}${LastDigit}`
+        ? `${Decremented}` extends keyof NegativeCarryMap
+          ? _Decrement<Rest, `${NegativeCarryMap[`${Decremented}`]}${Result}`>
+          : `${Rest}${Decremented}${Result}` extends infer FinalResult extends
+                string
+            ? ParseNumber<
+                FinalResult extends `0${infer FinalResultWithoutLeadingZero extends string}`
+                  ? FinalResultWithoutLeadingZero extends ""
+                    ? FinalResult
+                    : FinalResultWithoutLeadingZero
+                  : FinalResult
+              >
+            : never
         : never
       : never
-    : never
-  : never;
+    : never;
 
-type _DecrementNegativeOrZero<T extends number> = _Increment<
-  Stringify<T>
-> extends infer PositiveDecrementResult extends number
-  ? PositiveDecrementResult extends 0
-    ? PositiveDecrementResult
-    : Negate<PositiveDecrementResult>
-  : never;
+type _DecrementNegativeOrZero<T extends number> =
+  _Increment<Stringify<T>> extends infer PositiveDecrementResult extends number
+    ? PositiveDecrementResult extends 0
+      ? PositiveDecrementResult
+      : Negate<PositiveDecrementResult>
+    : never;
 
 /** -------------------------------------------------------
  * * ***Utility Type: `Decrement`.***
@@ -75,8 +75,9 @@ type _DecrementNegativeOrZero<T extends number> = _Increment<
  * type E = Decrement<-1>;  // ➔ -2
  * ```
  */
-export type Decrement<T extends number> = IsNegative<T> extends true
-  ? _DecrementNegativeOrZero<Abs<T>>
-  : T extends 0
-  ? _DecrementNegativeOrZero<T>
-  : _Decrement<Stringify<T>>;
+export type Decrement<T extends number> =
+  IsNegative<T> extends true
+    ? _DecrementNegativeOrZero<Abs<T>>
+    : T extends 0
+      ? _DecrementNegativeOrZero<T>
+      : _Decrement<Stringify<T>>;

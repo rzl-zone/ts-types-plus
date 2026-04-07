@@ -16,7 +16,7 @@ export type IsNever<T> = [T] extends [never] ? true : false;
 /** -------------------------------------------------------
  * * ***Utility Type: `IfNever`.***
  * -------------------------------------------------------
- * ****Conditional**: Selects one of two branches depending on whether `T` is `never`.**
+ * **Conditional**: Selects one of two branches depending on whether `T` is `never`.**
  * - Defaults: `IfTrue = true`, `IfFalse = false`.
  * @template T - Type to check.
  * @template IfTrue - The branch type if `T` is `never`, (default: `true`).
@@ -33,7 +33,11 @@ export type IsNever<T> = [T] extends [never] ? true : false;
  * // ➔ 'no'
  * ```
  */
-export type IfNever<T, IfTrue = true, IfFalse = false> = If<IsNever<T>, IfTrue, IfFalse>;
+export type IfNever<T, IfTrue = true, IfFalse = false> = If<
+  IsNever<T>,
+  IfTrue,
+  IfFalse
+>;
 
 /** -------------------------------------------------------
  * * ***Utility Type: `NeverifyPropertiesOptions`.***

@@ -42,6 +42,5 @@ export type Or<Condition1, Condition2> = IfExtends<
  * - Returns `true` if at least one element in the array is `true`.
  * - Returns `false` if all elements are `false` or array is empty.
  */
-export type OrArr<Conditions extends readonly unknown[]> = true extends Conditions[number]
-  ? true
-  : false;
+export type OrArr<Conditions extends readonly unknown[]> =
+  true extends Conditions[number] ? true : false;

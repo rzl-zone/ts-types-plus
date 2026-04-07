@@ -7,7 +7,10 @@ import type { NumberRangeLimit } from "./NumberRangeLimit";
  * @template N - Starting/Ending number of the range (inclusive).
  * @template Acc - Internal accumulator for recursion (do not set manually).
  */
-type Enumerate<N extends number, Acc extends number[] = []> = Acc["length"] extends N
+type Enumerate<
+  N extends number,
+  Acc extends number[] = []
+> = Acc["length"] extends N
   ? Acc[number]
   : Enumerate<N, [...Acc, Acc["length"]]>;
 
@@ -36,8 +39,11 @@ type Enumerate<N extends number, Acc extends number[] = []> = Acc["length"] exte
  * // ➔ 10
  * ```
  */
-export type NumberRangeUnion<From extends number, To extends number> = From extends To
+export type NumberRangeUnion<
+  From extends number,
+  To extends number
+> = From extends To
   ? From
   : Exclude<Enumerate<To>, Enumerate<From>> extends never
-  ? To
-  : Exclude<Enumerate<To>, Enumerate<From>> | To;
+    ? To
+    : Exclude<Enumerate<To>, Enumerate<From>> | To;

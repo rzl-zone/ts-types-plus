@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.0](https://github.com/rzl-zone/ts-types-plus/compare/v0.1.1...v0.2.0) (2026-04-07)
+
+
+### Features
+
+* **Config:** **Update** (`TypeScript`  to 5.9.3, `@eslint/js` to `^10`, `eslint` to `^10`). ([3949164](https://github.com/rzl-zone/ts-types-plus/commit/3949164943b46a15756922c100e98407deae3803))
+
 ## [0.1.1](https://github.com/rzl-zone/ts-types-plus/compare/v0.1.0...v0.1.1) (2026-04-07)
 
 

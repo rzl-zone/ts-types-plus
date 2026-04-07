@@ -17,9 +17,7 @@ export const minifyDtsDist = async (
       files.push(...matched);
     }
 
-    BUILD_LOGGER.ON_STARTING({
-      actionName: "Minify DTS"
-    });
+    BUILD_LOGGER.ON_STARTING({ actionName: "Minify DTS" });
 
     files.forEach((filePath, idx) => {
       const content = readFileSync(filePath, "utf-8");
@@ -34,6 +32,7 @@ export const minifyDtsDist = async (
       // Regex: keep existing JSDoc/comment logic
       const regex =
         /\/\/\/\s*<reference[\s\S]*?\/>|\/\*\*[\s\S]*?\*\/|\/\*(?!\*)[\s\S]*?\*\//g;
+      // eslint-disable-next-line no-useless-assignment
       let match: RegExpExecArray | null = null;
 
       while ((match = regex.exec(content)) !== null) {
@@ -112,15 +111,9 @@ export const minifyDtsDist = async (
       });
     });
 
-    BUILD_LOGGER.ON_FINISH({
-      actionName: "Minify DTS",
-      count: files.length
-    });
+    BUILD_LOGGER.ON_FINISH({ actionName: "Minify DTS", count: files.length });
   } catch (error) {
-    BUILD_LOGGER.ON_ERROR({
-      actionName: "DTS minified",
-      error
-    });
+    BUILD_LOGGER.ON_ERROR({ actionName: "DTS minified", error });
   }
 };
 

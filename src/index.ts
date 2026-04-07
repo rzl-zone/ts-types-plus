@@ -1,11 +1,6 @@
 export type { AreAnagrams } from "./types/anagram";
 export type { And, AndArr } from "./types/and";
-export type {
-  AnifyProperties,
-  AnifyPropertiesOptions,
-  IfAny,
-  IsAny
-} from "./types/any";
+export type { AnifyProperties, AnifyPropertiesOptions, IfAny, IsAny } from "./types/any";
 export type { ArgumentTypes } from "./types/argument";
 export type { ArrayElementType } from "./types/array-element-type";
 export type {
@@ -66,10 +61,7 @@ export type {
 export type { ExtractStrict } from "./types/extract";
 export type { Factorial } from "./types/factorial";
 export type { Fibonacci } from "./types/fibonacci";
-export type {
-  FirstCharacter,
-  FirstCharacterOptions
-} from "./types/first-character";
+export type { FirstCharacter, FirstCharacterOptions } from "./types/first-character";
 export type { FirstDigit } from "./types/first-digit";
 export type { Floor } from "./types/floor";
 export type { AnyFunction } from "./types/functions";
@@ -88,11 +80,7 @@ export type { Increment } from "./types/increment";
 export type { IndexOf } from "./types/index-of";
 export type { IsArrayIndex } from "./types/is-array-index";
 export type { IsArrayOrTuple } from "./types/is-array-or-tuple";
-export type {
-  IsArray,
-  IsMutableArray,
-  IsReadonlyArray
-} from "./types/is-array";
+export type { IsArray, IsMutableArray, IsReadonlyArray } from "./types/is-array";
 export type { IsBaseType } from "./types/is-base-type";
 export type { IsBetween, IsBetweenOptions } from "./types/is-between";
 export type { IsConstructor } from "./types/is-constructor";
@@ -113,10 +101,7 @@ export type { IsStringLiteral } from "./types/is-string-literal";
 export type { IfTuple, IsTuple } from "./types/is-tuple";
 export type { IsUnion } from "./types/is-union";
 export type { Join } from "./types/join";
-export type {
-  LastCharacter,
-  LastCharacterOptions
-} from "./types/last-character";
+export type { LastCharacter, LastCharacterOptions } from "./types/last-character";
 export type { LooseLiteral } from "./types/loose-literal";
 export type {
   IfLowerOrEqual,
@@ -222,37 +207,17 @@ export type {
 export type { PickStrict } from "./types/pick";
 export type { Pop, PopOptions } from "./types/pop";
 export type { Pow } from "./types/pow";
-export type {
-  DefaultPrettifyOptions,
-  Prettify,
-  PrettifyOptions
-} from "./types/prettify";
-export type {
-  IsPrimitive,
-  IsRealPrimitive,
-  Primitive
-} from "./types/primitive";
-export type {
-  Awaitable,
-  StrictAwaitable,
-  CustomPromiseType
-} from "./types/promises";
+export type { DefaultPrettifyOptions, Prettify, PrettifyOptions } from "./types/prettify";
+export type { IsPrimitive, IsRealPrimitive, Primitive } from "./types/primitive";
+export type { Awaitable, StrictAwaitable, CustomPromiseType } from "./types/promises";
 export type { Push } from "./types/push";
-export type {
-  ReadonlyExcept,
-  ReadonlyOnly,
-  ReadonlyDeep
-} from "./types/readonly";
+export type { ReadonlyExcept, ReadonlyOnly, ReadonlyDeep } from "./types/readonly";
 export type { AnyRecord, AnyStringRecord, UnknownRecord } from "./types/record";
 export type { RemoveIndexSignature } from "./types/remove-index-signature";
 export type { RemoveLeading } from "./types/remove-leading";
 export type { Repeat } from "./types/repeat";
 export type { ReplaceAll } from "./types/replace-all";
-export type {
-  Replace,
-  ReplaceToPartial,
-  ReplaceToRequired
-} from "./types/replace";
+export type { Replace, ReplaceToPartial, ReplaceToRequired } from "./types/replace";
 export type { RequiredExcept, RequiredOnly } from "./types/required";
 export type {
   ReturnItselfIfExtends,
@@ -287,13 +252,7 @@ export type { Sum, SumArr } from "./types/sum";
 export type { Swap } from "./types/swap";
 export type { Switch } from "./types/switch";
 export type { ToPrimitive } from "./types/to-primitive";
-export type {
-  Trim,
-  TrimLeft,
-  TrimRight,
-  TrimsLower,
-  TrimsUpper
-} from "./types/trim";
+export type { Trim, TrimLeft, TrimRight, TrimsLower, TrimsUpper } from "./types/trim";
 export type { Trunc } from "./types/trunc";
 export type { TupleToObject } from "./types/tuple-to-object";
 export type {
@@ -317,9 +276,4 @@ export type {
   UnknownifyPropertiesOptions
 } from "./types/unknown";
 export type { Unshift } from "./types/unshift";
-export type {
-  ValueOf,
-  ValueOfArray,
-  ValueOfExcept,
-  ValueOfOnly
-} from "./types/value-of";
+export type { ValueOf, ValueOfArray, ValueOfExcept, ValueOfOnly } from "./types/value-of";

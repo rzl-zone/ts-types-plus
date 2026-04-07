@@ -13,9 +13,7 @@ export const injectBanner = async (pattern: string | string[]) => {
       files.push(...matched);
     }
 
-    BUILD_LOGGER.ON_STARTING({
-      actionName: "Injecting Banner"
-    });
+    BUILD_LOGGER.ON_STARTING({ actionName: "Injecting Banner" });
 
     let injectedCount = 0;
 
@@ -25,6 +23,7 @@ export const injectBanner = async (pattern: string | string[]) => {
       const content = (await fs.promises.readFile(filePath, "utf8")).trimStart();
       const trimmed = content.trim();
 
+      // eslint-disable-next-line quotes
       if (!trimmed || trimmed === '"use strict";' || trimmed === "'use strict';")
         continue;
       if (content.startsWith(topBanner)) continue;
@@ -44,10 +43,7 @@ export const injectBanner = async (pattern: string | string[]) => {
     }
 
     if (injectedCount > 0) {
-      BUILD_LOGGER.ON_FINISH({
-        actionName: "Injecting Banner",
-        count: injectedCount
-      });
+      BUILD_LOGGER.ON_FINISH({ actionName: "Injecting Banner", count: injectedCount });
     } else {
       BUILD_LOGGER.ON_SKIPPING({
         actionName: "Injecting Banner",
@@ -55,10 +51,7 @@ export const injectBanner = async (pattern: string | string[]) => {
       });
     }
   } catch (error) {
-    BUILD_LOGGER.ON_ERROR({
-      actionName: "Injecting Banner",
-      error
-    });
+    BUILD_LOGGER.ON_ERROR({ actionName: "Injecting Banner", error });
   }
 };
 

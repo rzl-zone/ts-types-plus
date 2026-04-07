@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.1](https://github.com/rzl-zone/ts-types-plus/compare/v0.1.0...v0.1.1) (2026-04-07)
+
+
+### Bug Fixes
+
+* Fixing some bug and `Prettify` types also bump version ts to `6.0.2`. ([d4a59cc](https://github.com/rzl-zone/ts-types-plus/commit/d4a59cc97cb1f73bd2f37780b8098701eceb48b5))
+
 ## [0.1.0](https://github.com/rzl-zone/ts-types-plus/compare/v0.0.15...v0.1.0) (2025-10-25)
 
 
